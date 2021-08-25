@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echowish.android_backgroud.dao.PostMapper">
+
+    <resultMap id="postResultMapper" type="com.echowish.android_backgroud.pojo.Post">
+        <id property="postId" column="post_id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="title" column="title"></result>
+        <result property="content" column="content"></result>
+        <result property="reward" column="reward"></result>
+        <result property="imageUri" column="imageUri"></result>
+        <result property="time" column="time"></result>
+    </resultMap>
+
+
+    <insert id="insertPost" parameterType="com.echowish.android_backgroud.pojo.Post">
+        insert into post(post_id,user_id,title,content,reward,imageUri,`time`)
+        values(#{postId},#{userId},#{title},#{content},#{reward},#{imageUri},#{time})
+    </insert>
+
+</mapper>
