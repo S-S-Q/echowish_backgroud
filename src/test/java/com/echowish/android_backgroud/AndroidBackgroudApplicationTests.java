@@ -22,4 +22,10 @@ class AndroidBackgroudApplicationTests {
         System.out.print(userMapper.queryUserByAccount(String.valueOf(1)));
     }
 
+    @Test
+    void update()
+    {
+        postMapper.updateImageByPostId(1,"aaa.png");
+    }
+
 }

@@ -12,13 +12,13 @@
         <result property="sex" column="sex"></result>
         <result property="grade" column="grade"></result>
         <result property="campus" column="campus"></result>
-        <result property="headImageUri" column="headImageUri"></result>
+        <result property="headImage" column="head_image"></result>
     </resultMap>
 
 
     <insert id="insertUser" parameterType="com.echowish.android_backgroud.pojo.User">
-        insert into user(user_id,account,password,name,sex,grade,campus,headImageUri)
-        values (#{userId},#{account},#{password},#{name},#{sex},#{grade},#{campus},#{headImageUri});
+        insert into user(user_id,account,password,name,sex,grade,campus,head_image)
+        values (#{userId},#{account},#{password},#{name},#{sex},#{grade},#{campus},#{headImage});
     </insert>
 
     <select id="queryUserByAccount" parameterType="java.lang.String" resultMap="userResultMapper">
@@ -26,7 +26,7 @@
     </select>
 
     <select id="queryAccountNumsByAccount" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select count (*) from  `user` where account=#{account};
+        select count(*) from  `user` where account=#{account};
     </select>
 
 </mapper>

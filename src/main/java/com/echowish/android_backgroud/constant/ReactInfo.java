@@ -5,4 +5,6 @@ public class ReactInfo {
     public static String FAIL_INFO="fail";
 
     public static  String  REGISTER_FAIL="register_fail";
+
+    public static String LOAD_IMAGE_PATH="upload.file.path";
 }

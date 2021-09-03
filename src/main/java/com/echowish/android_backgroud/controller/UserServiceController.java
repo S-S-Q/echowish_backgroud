@@ -26,4 +26,12 @@ public class UserServiceController {
         user.setPassword(password);
         return userService.registerNewUsers(user);
     }
+
+    @GetMapping("login")
+    @ResponseBody
+    Integer loginOn(@RequestParam(value = "account",required = true) String account,
+                   @RequestParam(value = "password",required = true)String password)
+    {
+        return userService.logOn(account,password);
+    }
 }

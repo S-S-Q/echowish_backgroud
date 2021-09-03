@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Blob;
 import java.util.Date;
 
 
@@ -14,19 +15,22 @@ import java.util.Date;
 public class Post {
   public Integer postId;
   public Integer userId;
+  public String zone;
   public String title;
   public String content;
   public String reward;
-  public String imageUri;
+
+  public String postImage;
   public Date time;
 
-  public Post(Integer userId,String title,String content,String reward,String imageUri,Date time)
+  public Post(Integer userId,String title,String zone,String content,String reward,String imageUri,Date time)
   {
     this.userId=userId;
     this.title=title;
+    this.zone=zone;
     this.content=content;
     this.reward=reward;
-    this.imageUri=imageUri;
+    this.postImage=imageUri;
     this.time=time;
   }
 

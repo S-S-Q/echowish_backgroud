@@ -8,16 +8,25 @@
         <id property="postId" column="post_id"></id>
         <result property="userId" column="user_id"></result>
         <result property="title" column="title"></result>
+        <result property="zone" column="zone"></result>
         <result property="content" column="content"></result>
         <result property="reward" column="reward"></result>
-        <result property="imageUri" column="imageUri"></result>
+        <result property="postImage" column="post_image"></result>
         <result property="time" column="time"></result>
     </resultMap>
 
 
     <insert id="insertPost" parameterType="com.echowish.android_backgroud.pojo.Post">
-        insert into post(post_id,user_id,title,content,reward,imageUri,`time`)
-        values(#{postId},#{userId},#{title},#{content},#{reward},#{imageUri},#{time})
+        insert into post(post_id,user_id,title,zone,content,reward,post_image,`time`)
+        values(#{postId},#{userId},#{title},#{zone},#{content},#{reward},#{postImage},#{time})
     </insert>
+
+    <select id="queryImageByPostId" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select  postImage from post  where post_id=#{postId}
+    </select>
+
+    <update id="updateImageByPostId">
+        update post set post_image=#{postImage} where post_id=#{postId}
+    </update>
 
 </mapper>

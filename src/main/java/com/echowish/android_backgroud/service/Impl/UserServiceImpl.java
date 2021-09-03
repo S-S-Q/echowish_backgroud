@@ -25,12 +25,19 @@ public class UserServiceImpl implements UserService {
         }
         catch (Exception e)
         {
+            System.out.println(e);
             return ReactInfo.FAIL_INFO;
         }
     }
 
     @Override
     public Integer logOn(String account, String password) {
-        return null;
+        User user=userMapper.queryUserByAccount(account);
+        if(user.getPassword().equals(password))
+        {
+            return user.getUserId();
+        }
+        else
+            return -1;
     }
 }
