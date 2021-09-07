@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/post")
@@ -19,44 +20,31 @@ public class PostServiceController {
     @Autowired
     PostService postService;
 
-    @GetMapping("publish")
+    @PostMapping("publish")
     @ResponseBody
       public String publishPost(
-              @RequestParam(value = "user_id",required = true) Integer user_id,
-              @RequestParam(value = "title",required = true)String title,
-              @RequestParam(value = "zone",required = true)String zone,
-              @RequestParam(value = "content",required = true)String content,
-              @RequestParam(value = "reward",required = false)String reward,
-              @RequestParam(value = "image_uri",required = false) String post_image,
-              @RequestParam(value = "time",required = true) @DateTimeFormat(pattern="yyyy-MM-dd") Date time)
+            @RequestParam(value = "file",required = false) MultipartFile file,
+            @RequestParam(value = "filename",required = false) String filename,
+            @RequestParam(value = "user_id",required = true) Integer user_id,
+            @RequestParam(value = "title",required = true)String title,
+            @RequestParam(value = "zone",required = true)String zone,
+            @RequestParam(value = "content",required = true)String content,
+            @RequestParam(value = "reward",required = false)String reward,
+            @RequestParam(value = "time",required = true) @DateTimeFormat(pattern="yyyy-MM-dd") Date time)
       {
-          return postService.publishPost(new Post(user_id,title,zone,content,reward,post_image,time));
+          return postService.publishPost(file,new Post(user_id,title,zone,content,reward,filename,time));
       }
 
 
-    @PostMapping("load")
+    @GetMapping("query")
     @ResponseBody
-    public String loadImage(@RequestParam(value = "file",required = true) MultipartFile file,
-                            @RequestParam(value = "filename",required = true) String filename,
-                            @RequestParam(value="postId",required = true) Integer postId)
+    public List<Post> queryPost(@RequestParam(value = "start") Integer start,
+                                @RequestParam(value = "end")Integer end)
     {
-        return postService.loadImage(file,filename);
+        return postService.queryPost(start,end);
     }
 
-//    @PostMapping("load")
-//    @ResponseBody
-//    public String loadImage(@RequestParam(value = "file",required = true) MultipartFile file,
-//                            @RequestParam(value = "filename",required = true) String filename)
-//    {
-//        return postService.loadImage(file,filename);
-//    }
 
-//    @PostMapping("download")
-//    @ResponseBody
-//    public ResponseEntity<FileSystemResource> downloadImage(@RequestParam(value = "filename",required = true) String filename)
-//    {
-//        return postService.downloadImage(filename);
-//    }
 
     @PostMapping("download")
     @ResponseBody

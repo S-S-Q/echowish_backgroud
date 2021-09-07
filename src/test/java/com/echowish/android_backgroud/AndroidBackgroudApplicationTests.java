@@ -3,6 +3,7 @@ package com.echowish.android_backgroud;
 import com.echowish.android_backgroud.dao.PostMapper;
 import com.echowish.android_backgroud.dao.UserMapper;
 import com.echowish.android_backgroud.pojo.Post;
+import com.echowish.android_backgroud.service.PostService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,9 @@ class AndroidBackgroudApplicationTests {
     PostMapper postMapper;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    PostService postService;
+
     @Test
     void contextLoads() {
         System.out.print(userMapper.queryUserByAccount(String.valueOf(1)));
@@ -25,7 +29,7 @@ class AndroidBackgroudApplicationTests {
     @Test
     void update()
     {
-        postMapper.updateImageByPostId(1,"aaa.png");
+        postService.deleteImage("2021-09-06-01-09-15-1.jpg");
     }
 
 }

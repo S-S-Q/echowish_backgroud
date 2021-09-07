@@ -4,13 +4,11 @@ import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.PostMapper;
 import com.echowish.android_backgroud.pojo.Post;
 import com.echowish.android_backgroud.service.PostService;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -19,6 +17,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -28,12 +28,19 @@ public class PostServiceImpl implements PostService {
 
     //添加新的帖子 并且判断帖子是否符合条件
     @Override
-    public String publishPost(Post post) {
+    public String publishPost(MultipartFile file,Post post) {
         try{
             if(post.reward.equals(""))
                 post.reward=null;
-            postMapper.insertPost(post);
-            return ReactInfo.SUCCESS_INFO;
+
+            if(loadImage(file,post.postImage))
+            {
+                postMapper.insertPost(post);
+                deleteImage(post.postImage);
+                return ReactInfo.SUCCESS_INFO;
+            }
+            else
+                return ReactInfo.FAIL_INFO;
         }
         catch (Exception e) {
             System.out.println(e);
@@ -44,9 +51,9 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public String loadImage(MultipartFile file, String filename) {
+    public boolean loadImage(MultipartFile file, String filename) {
         if(file==null||file.isEmpty()||filename==null||filename.isEmpty())
-            return ReactInfo.FAIL_INFO;
+            return true;
         try(InputStream inputStream=file.getInputStream())
         {
             Path uploadPath= Paths.get(ReactInfo.LOAD_IMAGE_PATH);
@@ -54,44 +61,53 @@ public class PostServiceImpl implements PostService {
                 uploadPath.toFile().mkdir();
 
             Files.copy(inputStream, Paths.get(ReactInfo.LOAD_IMAGE_PATH).resolve(filename), StandardCopyOption.REPLACE_EXISTING);
-            return ReactInfo.SUCCESS_INFO;
+            return true;
         }
         catch (Exception e)
         {
             System.out.println(ReactInfo.FAIL_INFO);
-            return ReactInfo.FAIL_INFO;
+            return false;
         }
     }
 
     @Override
-    public String loadImage(MultipartFile file, String filename, Integer postId) {
-        if(file==null||file.isEmpty()||filename==null||filename.isEmpty())
-            return ReactInfo.FAIL_INFO;
-        try(InputStream inputStream=file.getInputStream())
-        {
-            Path uploadPath= Paths.get(ReactInfo.LOAD_IMAGE_PATH);
-            if(!uploadPath.toFile().exists())
-                uploadPath.toFile().mkdir();
-
-            Files.copy(inputStream, Paths.get(ReactInfo.LOAD_IMAGE_PATH).resolve(filename), StandardCopyOption.REPLACE_EXISTING);
-            postMapper.updateImageByPostId(postId,filename);
-            return ReactInfo.SUCCESS_INFO;
+    public void deleteImage(String filename) {
+        if(filename==null||filename.isEmpty())
+            return;
+        try{
+            File Image=new File(String.valueOf(Paths.get(ReactInfo.LOAD_IMAGE_PATH).resolve(filename)));
+            if(!Image.exists())
+                return;
+            else
+                Image.delete();
         }
         catch (Exception e)
         {
-            //如果失败删掉保存的图片
-            try {
-                File saveFile=Paths.get(ReactInfo.LOAD_IMAGE_PATH).resolve(filename).toFile();
-                if(saveFile.exists()&&saveFile.canRead())
-                    saveFile.delete();
-            }
-            catch (Exception ee)
-            {
 
-            }
-            return ReactInfo.FAIL_INFO;
         }
     }
+
+    @Override
+    public List<Post> queryPost(int start, int end) {
+        List returnList=null;
+        try
+        {
+            List list=postMapper.queryAllPost();
+            //如果开头就大于 list的大小 那么就返回空
+            if(start>list.size())
+                return null;
+            //如果尾部大于长度 则 返回 最大长度
+            end=end>list.size()?returnList.size():end;
+            returnList=list.subList(start,end);
+            System.out.println(returnList);
+            return returnList;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
 
     //通过图片路径查找图片 测试用 记得删除
     @Override
