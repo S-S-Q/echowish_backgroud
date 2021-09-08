@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.service;
 
+import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public interface PostService {
 
     List<Post> queryPost(int start,int end);
 
+    List<PartPost> queryPartPost(int start, int end);
 
     ResponseEntity<FileSystemResource> downloadImage(String filename);
 

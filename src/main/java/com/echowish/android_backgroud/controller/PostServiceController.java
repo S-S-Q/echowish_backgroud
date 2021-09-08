@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.controller;
 
+import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
 import com.echowish.android_backgroud.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,14 @@ public class PostServiceController {
                                 @RequestParam(value = "end")Integer end)
     {
         return postService.queryPost(start,end);
+    }
+
+    @GetMapping("queryPartPost")
+    @ResponseBody
+    public List<PartPost> queryPartPost(@RequestParam(value = "start") Integer start,
+                                        @RequestParam(value = "end")Integer end)
+    {
+        return postService.queryPartPost(start,end);
     }
 
 

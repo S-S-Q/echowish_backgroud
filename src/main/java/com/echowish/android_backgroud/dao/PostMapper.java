@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.dao;
 
+import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -20,4 +21,7 @@ public interface PostMapper {
 
     //获取帖子所有信息
     public List<Post> queryAllPost();
+
+    //获取帖子部分信息 用于首页展示
+    public List<PartPost> queryAllPartPost();
 }

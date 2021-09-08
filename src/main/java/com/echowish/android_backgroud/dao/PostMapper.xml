@@ -15,6 +15,13 @@
         <result property="time" column="time"></result>
     </resultMap>
 
+    <resultMap id="partPostResultMapper" type="com.echowish.android_backgroud.pojo.PartPost">
+        <id property="postId" column="post_id"></id>
+        <result property="title" column="title"></result>
+        <result property="zone" column="zone"></result>
+        <result property="content" column="content"></result>
+    </resultMap>
+
 
     <insert id="insertPost" parameterType="com.echowish.android_backgroud.pojo.Post">
         insert into post(post_id,user_id,title,zone,content,reward,post_image,`time`)
@@ -31,6 +38,10 @@
 
     <select id="queryAllPost" resultMap="postResultMapper">
         select *from post;
+    </select>
+
+    <select id="queryAllPartPost" resultMap="partPostResultMapper">
+        select post_id,title,zone,content from post;
     </select>
 
 </mapper>

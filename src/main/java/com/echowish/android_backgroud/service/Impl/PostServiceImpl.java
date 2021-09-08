@@ -2,6 +2,7 @@ package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.PostMapper;
+import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
 import com.echowish.android_backgroud.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,15 @@ public class PostServiceImpl implements PostService {
             if(loadImage(file,post.postImage))
             {
                 postMapper.insertPost(post);
-                deleteImage(post.postImage);
+
                 return ReactInfo.SUCCESS_INFO;
             }
             else
+            {
+                deleteImage(post.postImage);
                 return ReactInfo.FAIL_INFO;
+            }
+
         }
         catch (Exception e) {
             System.out.println(e);
@@ -99,7 +104,26 @@ public class PostServiceImpl implements PostService {
             //如果尾部大于长度 则 返回 最大长度
             end=end>list.size()?returnList.size():end;
             returnList=list.subList(start,end);
-            System.out.println(returnList);
+            return returnList;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    @Override
+    public List<PartPost> queryPartPost(int start, int end) {
+        List returnList=null;
+        try
+        {
+            List list=postMapper.queryAllPartPost();
+            //如果开头就大于 list的大小 那么就返回空
+            if(start>list.size())
+                return null;
+            //如果尾部大于长度 则 返回 最大长度
+            end=end>list.size()?returnList.size():end;
+            returnList=list.subList(start,end);
             return returnList;
         }
         catch (Exception e)
