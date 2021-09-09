@@ -29,19 +29,30 @@
     </insert>
 
     <select id="queryImageByPostId" parameterType="java.lang.Integer" resultType="java.lang.String">
-        select  postImage from post  where post_id=#{postId}
+        select  post_image from post  where post_id=#{postId}
     </select>
 
     <delete id="deleteByPostId" parameterType="java.lang.Integer">
         delete from post where post_id=#{postId};
     </delete>
 
-    <select id="queryAllPost" resultMap="postResultMapper">
-        select *from post;
+    <select id="queryPost" resultMap="postResultMapper" parameterType="java.lang.Integer">
+        select *from post where post_id=#{postId};
     </select>
 
     <select id="queryAllPartPost" resultMap="partPostResultMapper">
         select post_id,title,zone,content from post;
     </select>
 
+    <select id="queryAllPartPostByZone" resultMap="partPostResultMapper" parameterType="java.lang.String">
+        select post_id,title,zone,content from post  where zone=#{zone};
+    </select>
+
+    <select id="queryAllPartPostByKeyword" resultMap="partPostResultMapper" parameterType="java.lang.String">
+        select post_id,title,zone,content from post  where title like '%${keyword}%' or content like '%${keyword}%';
+    </select>
+
+    <select id="queryAllPartPostByZoneAndKeyWord" resultMap="partPostResultMapper">
+        select post_id,title,zone,content from post  where (title like '%${keyword}%' or content like '%${keyword}%') and zone=#{zone};
+    </select>
 </mapper>

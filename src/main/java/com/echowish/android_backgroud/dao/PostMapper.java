@@ -20,8 +20,18 @@ public interface PostMapper {
     public void deleteByPostId(Integer postId);
 
     //获取帖子所有信息
-    public List<Post> queryAllPost();
+    public Post queryPost(Integer postId);
 
     //获取帖子部分信息 用于首页展示
     public List<PartPost> queryAllPartPost();
+
+    //获取帖子的部分信息 通过分区
+    public  List<PartPost> queryAllPartPostByZone(String zone);
+
+    //通过关键字获取帖子部分信息
+    public List<PartPost>  queryAllPartPostByKeyword(String keyword);
+
+    //通过关键字 或者分区 获取帖子的部分信息
+    public List<PartPost> queryAllPartPostByZoneAndKeyWord(@Param(value = "zone") String zone,
+                                                           @Param(value = "keyword") String keyword);
 }

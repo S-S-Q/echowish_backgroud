@@ -19,9 +19,15 @@ public interface PostService {
     //删除图片
     void deleteImage(String filename);
 
-    List<Post> queryPost(int start,int end);
+    Post queryPost(Integer postId);
 
     List<PartPost> queryPartPost(int start, int end);
+
+    List<PartPost> queryPartPostByZone(int start,int end,String zone);
+
+    List<PartPost> queryPartPostByKeyWord(String keyword);
+
+    List<PartPost> queryPartPostByZoneAndKeyWord(String zone,String keyword);
 
     ResponseEntity<FileSystemResource> downloadImage(String filename);
 

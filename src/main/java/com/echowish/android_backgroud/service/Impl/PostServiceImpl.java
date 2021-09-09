@@ -31,8 +31,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public String publishPost(MultipartFile file,Post post) {
         try{
-            if(post.reward.equals(""))
-                post.reward=null;
+            if(post.postImage==null)
+                post.postImage="";
+
 
             if(loadImage(file,post.postImage))
             {
@@ -93,11 +94,49 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> queryPost(int start, int end) {
+    public Post queryPost(Integer postId) {
+        Post post=null;
+        try
+        {
+            if(postId==null)
+                return null;
+            post=postMapper.queryPost(postId);
+            //如果开头就大于 list的大小 那么就返回空
+            //如果尾部大于长度 则 返回 最大长度
+            return post;
+        }
+        catch (Exception e)
+        {
+            return post;
+        }
+    }
+
+    @Override
+    public List<PartPost> queryPartPost(int start, int end) {
         List returnList=null;
         try
         {
-            List list=postMapper.queryAllPost();
+            List list=postMapper.queryAllPartPost();
+            //如果开头就大于 list的大小 那么就返回空
+            if(start>list.size())
+                return null;
+            //如果尾部大于长度 则 返回 最大长度
+            end=end>list.size()?list.size():end;
+            returnList=list.subList(start,end);
+            return returnList;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    @Override
+    public List<PartPost> queryPartPostByZone(int start, int end, String zone) {
+        List returnList=null;
+        try
+        {
+            List list=postMapper.queryAllPartPostByZone(zone);
             //如果开头就大于 list的大小 那么就返回空
             if(start>list.size())
                 return null;
@@ -113,22 +152,28 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PartPost> queryPartPost(int start, int end) {
-        List returnList=null;
+    public List<PartPost> queryPartPostByKeyWord(String keyword) {
+        List ansList=null;
         try
         {
-            List list=postMapper.queryAllPartPost();
-            //如果开头就大于 list的大小 那么就返回空
-            if(start>list.size())
-                return null;
-            //如果尾部大于长度 则 返回 最大长度
-            end=end>list.size()?returnList.size():end;
-            returnList=list.subList(start,end);
-            return returnList;
-        }
-        catch (Exception e)
+            ansList=postMapper.queryAllPartPostByKeyword(keyword);
+            return ansList;
+        }catch (Exception e)
         {
-            return null;
+            return ansList;
+        }
+    }
+
+    @Override
+    public List<PartPost> queryPartPostByZoneAndKeyWord(String zone, String keyword) {
+        List ansList=null;
+        try
+        {
+            ansList=postMapper.queryAllPartPostByZoneAndKeyWord(zone,keyword);
+            return ansList;
+        }catch (Exception e)
+        {
+            return ansList;
         }
     }
 

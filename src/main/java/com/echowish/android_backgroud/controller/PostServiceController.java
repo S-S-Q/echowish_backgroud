@@ -39,10 +39,9 @@ public class PostServiceController {
 
     @GetMapping("query")
     @ResponseBody
-    public List<Post> queryPost(@RequestParam(value = "start") Integer start,
-                                @RequestParam(value = "end")Integer end)
+    public Post queryPost(@RequestParam(value = "postId")Integer postId)
     {
-        return postService.queryPost(start,end);
+        return postService.queryPost(postId);
     }
 
     @GetMapping("queryPartPost")
@@ -53,7 +52,30 @@ public class PostServiceController {
         return postService.queryPartPost(start,end);
     }
 
+    @GetMapping("queryPartPostByZone")
+    @ResponseBody
+    public List<PartPost> queryPartPostByZone(
+            @RequestParam(value = "start") Integer start,
+            @RequestParam(value = "end") Integer end,
+        @RequestParam(value = "zone" )String zone)
+    {
+        return postService.queryPartPostByZone(start,end,zone);
+    }
 
+    @GetMapping("queryPartPostByKeyWord")
+    @ResponseBody
+    public List<PartPost>queryPartPostByKeyWord(@RequestParam(value = "keyword")String keyword)
+    {
+        return postService.queryPartPostByKeyWord(keyword);
+    }
+
+    @GetMapping("queryPartPostByZoneAndKeyWord")
+    @ResponseBody
+    public List<PartPost> queryPartPostByZoneAndKeyWord(@RequestParam(value = "zone")String zone,
+                                                        @RequestParam(value = "keyword") String keyword)
+    {
+        return  postService.queryPartPostByZoneAndKeyWord(zone,keyword);
+    }
 
     @PostMapping("download")
     @ResponseBody

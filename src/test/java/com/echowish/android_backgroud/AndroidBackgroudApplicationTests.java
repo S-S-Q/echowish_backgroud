@@ -32,4 +32,12 @@ class AndroidBackgroudApplicationTests {
         postService.deleteImage("2021-09-06-01-09-15-1.jpg");
     }
 
+    @Test
+    void get()
+    {
+//        System.out.println(postMapper.queryAllPartPostByKeyword("s"));
+        System.out.println(postMapper.queryAllPartPostByZoneAndKeyWord("xx","s"));
+        ;
+    }
+
 }
