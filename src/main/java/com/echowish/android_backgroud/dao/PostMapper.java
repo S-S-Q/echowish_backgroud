@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.dao;
 
+import com.echowish.android_backgroud.pojo.MyPublishPost;
 import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
 import org.apache.ibatis.annotations.Param;
@@ -34,4 +35,6 @@ public interface PostMapper {
     //通过关键字 或者分区 获取帖子的部分信息
     public List<PartPost> queryAllPartPostByZoneAndKeyWord(@Param(value = "zone") String zone,
                                                            @Param(value = "keyword") String keyword);
+
+    public List<MyPublishPost> queryMyPublishPostByUserId(Integer userId);
 }

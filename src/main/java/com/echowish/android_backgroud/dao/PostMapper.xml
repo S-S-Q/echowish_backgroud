@@ -22,6 +22,14 @@
         <result property="content" column="content"></result>
     </resultMap>
 
+    <resultMap id="myPublishPostResultMapper" type="com.echowish.android_backgroud.pojo.MyPublishPost">
+        <id property="postId" column="post_id"></id>
+        <result property="title" column="title"></result>
+        <result property="zone" column="zone"></result>
+        <result property="content" column="content"></result>
+        <result property="time" column="time"></result>
+    </resultMap>
+
 
     <insert id="insertPost" parameterType="com.echowish.android_backgroud.pojo.Post">
         insert into post(post_id,user_id,title,zone,content,reward,post_image,`time`)
@@ -54,5 +62,9 @@
 
     <select id="queryAllPartPostByZoneAndKeyWord" resultMap="partPostResultMapper">
         select post_id,title,zone,content from post  where (title like '%${keyword}%' or content like '%${keyword}%') and zone=#{zone};
+    </select>
+
+    <select id="queryMyPublishPostByUserId" resultMap="myPublishPostResultMapper">
+        select post_id,title,zone,content,time from post  where user_id=#{userId};
     </select>
 </mapper>

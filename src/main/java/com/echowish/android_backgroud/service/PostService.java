@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.service;
 
+import com.echowish.android_backgroud.pojo.MyPublishPost;
 import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
 import org.springframework.core.io.FileSystemResource;
@@ -28,6 +29,8 @@ public interface PostService {
     List<PartPost> queryPartPostByKeyWord(String keyword);
 
     List<PartPost> queryPartPostByZoneAndKeyWord(String zone,String keyword);
+
+    List<MyPublishPost> queryMyPublishPostByUserId(Integer userId);
 
     ResponseEntity<FileSystemResource> downloadImage(String filename);
 

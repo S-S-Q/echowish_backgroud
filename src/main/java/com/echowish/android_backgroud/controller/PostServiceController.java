@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.controller;
 
+import com.echowish.android_backgroud.pojo.MyPublishPost;
 import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
 import com.echowish.android_backgroud.service.PostService;
@@ -75,6 +76,13 @@ public class PostServiceController {
                                                         @RequestParam(value = "keyword") String keyword)
     {
         return  postService.queryPartPostByZoneAndKeyWord(zone,keyword);
+    }
+
+    @GetMapping("queryMyPublishPostByUserId")
+    @ResponseBody
+    public List<MyPublishPost> queryMyPublishPostByUserId(@RequestParam(value = "userId")Integer userId)
+    {
+        return postService.queryMyPublishPostByUserId(userId);
     }
 
     @PostMapping("download")

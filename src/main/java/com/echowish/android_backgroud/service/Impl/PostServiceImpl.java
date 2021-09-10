@@ -2,6 +2,7 @@ package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.PostMapper;
+import com.echowish.android_backgroud.pojo.MyPublishPost;
 import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
 import com.echowish.android_backgroud.service.PostService;
@@ -141,7 +142,7 @@ public class PostServiceImpl implements PostService {
             if(start>list.size())
                 return null;
             //如果尾部大于长度 则 返回 最大长度
-            end=end>list.size()?returnList.size():end;
+            end=end>list.size()?list.size():end;
             returnList=list.subList(start,end);
             return returnList;
         }
@@ -169,7 +170,26 @@ public class PostServiceImpl implements PostService {
         List ansList=null;
         try
         {
-            ansList=postMapper.queryAllPartPostByZoneAndKeyWord(zone,keyword);
+            //如果是所有区域 则 只搜寻关键字
+            if(zone.equals("全部"))
+                ansList=postMapper.queryAllPartPostByKeyword(keyword);
+            //如果是特定区域 则 搜索该区域和关键字
+            else
+                ansList=postMapper.queryAllPartPostByZoneAndKeyWord(zone,keyword);
+            System.out.println(zone+keyword);
+            return ansList;
+        }catch (Exception e)
+        {
+            return ansList;
+        }
+    }
+
+    @Override
+    public List<MyPublishPost> queryMyPublishPostByUserId(Integer userId) {
+        List ansList=null;
+        try
+        {
+            ansList=postMapper.queryMyPublishPostByUserId(userId);
             return ansList;
         }catch (Exception e)
         {

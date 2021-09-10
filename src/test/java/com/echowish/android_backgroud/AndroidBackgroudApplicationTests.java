@@ -1,7 +1,9 @@
 package com.echowish.android_backgroud;
 
+import com.echowish.android_backgroud.dao.CommentMapper;
 import com.echowish.android_backgroud.dao.PostMapper;
 import com.echowish.android_backgroud.dao.UserMapper;
+import com.echowish.android_backgroud.pojo.Comment;
 import com.echowish.android_backgroud.pojo.Post;
 import com.echowish.android_backgroud.service.PostService;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,8 @@ class AndroidBackgroudApplicationTests {
     UserMapper userMapper;
     @Autowired
     PostService postService;
+    @Autowired
+    CommentMapper commentMapper;
 
     @Test
     void contextLoads() {
@@ -36,8 +40,6 @@ class AndroidBackgroudApplicationTests {
     void get()
     {
 //        System.out.println(postMapper.queryAllPartPostByKeyword("s"));
-        System.out.println(postMapper.queryAllPartPostByZoneAndKeyWord("xx","s"));
-        ;
     }
 
 }
