@@ -5,7 +5,19 @@ import com.echowish.android_backgroud.dao.UserMapper;
 import com.echowish.android_backgroud.pojo.User;
 import com.echowish.android_backgroud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -59,6 +71,65 @@ public class UserServiceImpl implements UserService {
         catch (Exception e)
         {
             return user;
+        }
+    }
+
+    @Override
+    public ResponseEntity<FileSystemResource> downloadImage(Integer userId) {
+        String filename=userMapper.queryImageByUserId(userId);
+        if(filename==null)
+            return null;
+        //通过路径 将该路径下的文件 转化为文件类
+        File file= Paths.get(ReactInfo.LOAD_HEAD_IMAGE_PATH).resolve(filename).toFile();
+        //文件存在且可读
+        if(file.exists()&&file.canRead())
+        {
+            return ResponseEntity.ok()
+                    .contentType(file.getName().contains("jpg")? MediaType.IMAGE_JPEG:MediaType.IMAGE_PNG)
+                    .body(new FileSystemResource(file));
+        }
+        else
+            return null;
+    }
+
+    @Override
+    public String loadImage(MultipartFile file, int userId) {
+        if(file==null||file.isEmpty())
+            return ReactInfo.FAIL_INFO;
+        try(InputStream inputStream=file.getInputStream())
+        {
+            Path uploadPath= Paths.get(ReactInfo.LOAD_IMAGE_PATH);
+            if(!uploadPath.toFile().exists())
+                uploadPath.toFile().mkdir();
+            String filename= UUID.randomUUID().toString().replace("-","");
+            filename=filename+userId+".jpg";
+            userMapper.updateImageByUserId(userId,filename);
+            String deleteFilename=userMapper.queryImageByUserId(userId);
+            deleteImage(deleteFilename);
+            Files.copy(inputStream, Paths.get(ReactInfo.LOAD_HEAD_IMAGE_PATH).resolve(filename), StandardCopyOption.REPLACE_EXISTING);
+            return ReactInfo.SUCCESS_INFO;
+        }
+        catch (Exception e)
+        {
+            System.out.println(ReactInfo.FAIL_INFO);
+            return ReactInfo.FAIL_INFO;
+        }
+    }
+
+    @Override
+    public void deleteImage(String filename) {
+        if(filename==null||filename.isEmpty())
+            return;
+        try{
+            File Image=new File(String.valueOf(Paths.get(ReactInfo.LOAD_HEAD_IMAGE_PATH).resolve(filename)));
+            if(!Image.exists())
+                return;
+            else
+                Image.delete();
+        }
+        catch (Exception e)
+        {
+
         }
     }
 }

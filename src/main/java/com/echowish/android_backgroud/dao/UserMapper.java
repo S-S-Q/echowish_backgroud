@@ -1,6 +1,7 @@
 package com.echowish.android_backgroud.dao;
 
 import com.echowish.android_backgroud.pojo.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -14,4 +15,9 @@ public interface UserMapper {
 
     //返回用户信息
     User queryUserByUserId(Integer userId);
+
+    //拿到用户头像信息
+    String queryImageByUserId(Integer userId);
+
+    void updateImageByUserId(@Param(value = "userId") Integer userId, @Param("filename") String filename);
 }
