@@ -11,4 +11,7 @@ public interface UserMapper {
 
     //查找账户数量 以便查看是否重复
     Integer queryAccountNumsByAccount(String account);
+
+    //返回用户信息
+    User queryUserByUserId(Integer userId);
 }

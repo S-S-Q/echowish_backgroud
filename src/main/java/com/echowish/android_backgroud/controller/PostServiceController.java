@@ -37,6 +37,13 @@ public class PostServiceController {
           return postService.publishPost(file,new Post(user_id,title,zone,content,reward,filename,time));
       }
 
+    @GetMapping("delete")
+    @ResponseBody
+    public  String deletePost(@RequestParam(value = "postId")Integer postId)
+    {
+        return postService.deletePost(postId);
+    }
+
 
     @GetMapping("query")
     @ResponseBody

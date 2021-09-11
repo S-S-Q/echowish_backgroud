@@ -14,6 +14,8 @@ import java.util.List;
 public interface PostService {
     String publishPost(MultipartFile file,Post post);
 
+    String deletePost(int postId);
+
     //加载图片 不是接口
     boolean loadImage(MultipartFile file,String filename);
 

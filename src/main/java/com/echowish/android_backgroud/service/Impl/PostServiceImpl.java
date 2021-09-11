@@ -1,6 +1,7 @@
 package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.constant.ReactInfo;
+import com.echowish.android_backgroud.dao.CommentMapper;
 import com.echowish.android_backgroud.dao.PostMapper;
 import com.echowish.android_backgroud.pojo.MyPublishPost;
 import com.echowish.android_backgroud.pojo.PartPost;
@@ -27,6 +28,8 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     PostMapper postMapper;
+    @Autowired
+    CommentMapper commentMapper;
 
     //添加新的帖子 并且判断帖子是否符合条件
     @Override
@@ -55,6 +58,18 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    @Override
+    public String deletePost(int postId) {
+        try {
+            commentMapper.deleteCommentByPostId(postId);
+            postMapper.deleteByPostId(postId);
+            return ReactInfo.SUCCESS_INFO;
+        }
+        catch (Exception e)
+        {
+            return ReactInfo.FAIL_INFO;
+        }
+    }
 
 
     @Override

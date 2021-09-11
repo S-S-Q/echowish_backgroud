@@ -9,5 +9,5 @@ public interface UserService {
     //登录成功返回Integer值  失败返回-1（注意应该将android端未登录设为-1）
     Integer logOn(String account,String password);
 
-
+    User getUserMessage(int userId);
 }

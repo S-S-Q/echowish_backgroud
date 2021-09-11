@@ -32,12 +32,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer logOn(String account, String password) {
-        User user=userMapper.queryUserByAccount(account);
-        if(user.getPassword().equals(password))
+        try
         {
-            return user.getUserId();
+            User user=userMapper.queryUserByAccount(account);
+            if(user.getPassword().equals(password))
+            {
+                return user.getUserId();
+            }
+            else
+                return -1;
         }
-        else
+        catch (Exception e)
+        {
             return -1;
+        }
+
+    }
+
+    @Override
+    public User getUserMessage(int userId) {
+        User user=null;
+        try {
+            user=userMapper.queryUserByUserId(userId);
+            return user;
+        }
+        catch (Exception e)
+        {
+            return user;
+        }
     }
 }

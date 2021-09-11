@@ -17,8 +17,8 @@
 
 
     <insert id="insertUser" parameterType="com.echowish.android_backgroud.pojo.User">
-        insert into user(user_id,account,password,name,sex,grade,campus,head_image)
-        values (#{userId},#{account},#{password},#{name},#{sex},#{grade},#{campus},#{headImage});
+        insert into user(user_id,account,password)
+        values (#{userId},#{account},#{password});
     </insert>
 
     <select id="queryUserByAccount" parameterType="java.lang.String" resultMap="userResultMapper">
@@ -29,4 +29,7 @@
         select count(*) from  `user` where account=#{account};
     </select>
 
+    <select id="queryUserByUserId" resultMap="userResultMapper" parameterType="java.lang.Integer">
+        select * from `user` where user_id=#{userId};
+    </select>
 </mapper>

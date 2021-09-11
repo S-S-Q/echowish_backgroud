@@ -39,7 +39,8 @@ class AndroidBackgroudApplicationTests {
     @Test
     void get()
     {
-//        System.out.println(postMapper.queryAllPartPostByKeyword("s"));
+        commentMapper.deleteCommentByPostId(1);
+        postMapper.deleteByPostId(1);
     }
 
 }

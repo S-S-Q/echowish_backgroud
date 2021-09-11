@@ -9,4 +9,6 @@ public interface CommentMapper {
     void insertNewComment(Comment comment);
 
     void deleteComment(Comment comment);
+
+    void deleteCommentByPostId(Integer postId);
 }
