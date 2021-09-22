@@ -38,6 +38,10 @@
     </select>
 
     <update id="updateImageByUserId">
-        update `user` set head_image=filename where user_id=#{userId};
+        update `user` set head_image=#{filename} where user_id=#{userId};
+    </update>
+
+    <update id="updateUserInfo" parameterType="com.echowish.android_backgroud.pojo.User">
+        update `user` set name=#{name},sex=#{sex},grade=#{grade},campus=#{campus} where user_id=#{userId};
     </update>
 </mapper>

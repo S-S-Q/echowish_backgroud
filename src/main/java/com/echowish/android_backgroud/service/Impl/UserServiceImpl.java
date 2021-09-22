@@ -98,13 +98,15 @@ public class UserServiceImpl implements UserService {
             return ReactInfo.FAIL_INFO;
         try(InputStream inputStream=file.getInputStream())
         {
-            Path uploadPath= Paths.get(ReactInfo.LOAD_IMAGE_PATH);
+            Path uploadPath= Paths.get(ReactInfo.LOAD_HEAD_IMAGE_PATH);
             if(!uploadPath.toFile().exists())
                 uploadPath.toFile().mkdir();
             String filename= UUID.randomUUID().toString().replace("-","");
             filename=filename+userId+".jpg";
             userMapper.updateImageByUserId(userId,filename);
+
             String deleteFilename=userMapper.queryImageByUserId(userId);
+            if(!deleteFilename.equals(""))
             deleteImage(deleteFilename);
             Files.copy(inputStream, Paths.get(ReactInfo.LOAD_HEAD_IMAGE_PATH).resolve(filename), StandardCopyOption.REPLACE_EXISTING);
             return ReactInfo.SUCCESS_INFO;
@@ -130,6 +132,18 @@ public class UserServiceImpl implements UserService {
         catch (Exception e)
         {
 
+        }
+    }
+
+    @Override
+    public String updateUserInfo(User newuser) {
+        try {
+            userMapper.updateUserInfo(newuser);
+            return ReactInfo.SUCCESS_INFO;
+        }
+        catch (Exception e)
+        {
+            return ReactInfo.FAIL_INFO;
         }
     }
 }

@@ -5,6 +5,7 @@ import com.echowish.android_backgroud.dao.PostMapper;
 import com.echowish.android_backgroud.dao.UserMapper;
 import com.echowish.android_backgroud.pojo.Comment;
 import com.echowish.android_backgroud.pojo.Post;
+import com.echowish.android_backgroud.service.CommentService;
 import com.echowish.android_backgroud.service.PostService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ class AndroidBackgroudApplicationTests {
     PostService postService;
     @Autowired
     CommentMapper commentMapper;
+    @Autowired
+    CommentService commentService;
 
     @Test
     void contextLoads() {
@@ -39,8 +42,9 @@ class AndroidBackgroudApplicationTests {
     @Test
     void get()
     {
-        commentMapper.deleteCommentByPostId(1);
-        postMapper.deleteByPostId(1);
+//        commentMapper.queryAllCommentsByPostId(1);
+        System.out.println(commentService.queryAllMyCommentBuUserId(3));;
+//       commentService.queryAllMyCommentBuUserId(3);
     }
 
 }

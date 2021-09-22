@@ -2,13 +2,12 @@ package com.echowish.android_backgroud.controller;
 
 import com.echowish.android_backgroud.pojo.User;
 import com.echowish.android_backgroud.service.UserService;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("user")
@@ -42,5 +41,37 @@ public class UserServiceController {
     User queryUserByUserId(@RequestParam(value = "userId")Integer userId)
     {
         return userService.getUserMessage(userId);
+    }
+
+    @PostMapping("updateUserHeadImage")
+    @ResponseBody
+    String updateUserHeadImage(@RequestParam(value = "userId")Integer userId,
+                               @RequestParam(value = "image")MultipartFile image)
+    {
+        return userService.loadImage(image,userId);
+    }
+
+    @PostMapping("getUserHeadImage")
+    @ResponseBody
+    ResponseEntity<FileSystemResource> getUserHeadImage(@RequestParam("userId")Integer userId)
+    {
+        return userService.downloadImage(userId);
+    }
+
+    @GetMapping("updateUserInfo")
+    @ResponseBody
+    String updateUserInfo(@RequestParam(value = "userId")Integer userId,
+                          @RequestParam(value = "name")String name,
+                          @RequestParam(value = "sex")Integer sex,
+                          @RequestParam(value = "grade")Integer grade,
+                          @RequestParam("campus")String campus)
+    {
+        User user=new User();
+        user.userId=userId;
+        user.name=name;
+        user.sex=sex;
+        user.grade=grade;
+        user.campus=campus;
+        return userService.updateUserInfo(user);
     }
 }

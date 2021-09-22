@@ -21,4 +21,7 @@ public interface UserService {
 
     //删除图片
     void deleteImage(String filename);
+
+    //更新资料
+    String updateUserInfo(User newuser);
 }

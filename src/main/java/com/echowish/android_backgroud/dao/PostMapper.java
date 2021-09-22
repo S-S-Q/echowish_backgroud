@@ -23,6 +23,9 @@ public interface PostMapper {
     //获取帖子所有信息
     public Post queryPost(Integer postId);
 
+    //通过帖子ID获取标题
+    public String queryPostTitleByPostId(Integer postId);
+
     //获取帖子部分信息 用于首页展示
     public List<PartPost> queryAllPartPost();
 

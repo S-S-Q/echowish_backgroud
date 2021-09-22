@@ -23,4 +23,12 @@
         delete from comment where post_id=#{postId};
     </delete>
 
+    <select id="queryAllCommentsByPostId" resultMap="commentResultMap" parameterType="java.lang.Integer">
+        select * from comment where post_id=#{postId};
+    </select>
+
+    <select id="queryAllCommentsByUserId" resultMap="commentResultMap" parameterType="java.lang.Integer">
+        select * from comment where user_id=#{userId};
+    </select>
+
 </mapper>

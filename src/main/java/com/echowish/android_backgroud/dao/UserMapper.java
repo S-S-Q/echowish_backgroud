@@ -20,4 +20,8 @@ public interface UserMapper {
     String queryImageByUserId(Integer userId);
 
     void updateImageByUserId(@Param(value = "userId") Integer userId, @Param("filename") String filename);
+
+    void updateUserInfo(User user);
+
+
 }

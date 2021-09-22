@@ -48,6 +48,10 @@
         select *from post where post_id=#{postId};
     </select>
 
+    <select id="queryPostTitleByPostId" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select title from post where post_id=#{postId};
+    </select>
+
     <select id="queryAllPartPost" resultMap="partPostResultMapper">
         select post_id,title,zone,content from post;
     </select>
