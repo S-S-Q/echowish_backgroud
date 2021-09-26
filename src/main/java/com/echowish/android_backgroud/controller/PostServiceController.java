@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.controller;
 
+import com.echowish.android_backgroud.pojo.DetailPost;
 import com.echowish.android_backgroud.pojo.MyPublishPost;
 import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
@@ -51,6 +52,11 @@ public class PostServiceController {
     {
         return postService.queryPost(postId);
     }
+
+    @GetMapping("queryDetailPost")
+    @ResponseBody
+    public DetailPost queryDetailPost(@RequestParam(value = "postId")Integer postId)
+    {return postService.queryDetailPost(postId);}
 
     @GetMapping("queryPartPost")
     @ResponseBody

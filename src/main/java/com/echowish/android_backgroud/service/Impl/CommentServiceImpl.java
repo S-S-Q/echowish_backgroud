@@ -53,21 +53,14 @@ public class CommentServiceImpl implements CommentService {
     //多表查询优于单表多次查询 建议有空优化
     @Override
     public List<CommentAndUserInfo> queryAllCommentByPostId(Integer postId) {
-        List<CommentAndUserInfo> commentAndUserInfoList=new LinkedList<>();
+        List<CommentAndUserInfo> commentAndUserInfoList=null;
         try
         {
-         List<Comment> commentList=commentMapper.queryAllCommentsByPostId(postId);
-         for(Comment comment:commentList)
-         {
-             User user=userMapper.queryUserByUserId(comment.getUserId());
-             CommentAndUserInfo commentAndUserInfo=new CommentAndUserInfo(comment,user.name,user.headImage);
-             commentAndUserInfoList.add(commentAndUserInfo);
-         }
+            commentAndUserInfoList=commentMapper.queryAllCommentAndUserInfoByPostId(postId);
             return commentAndUserInfoList;
         }
         catch (Exception e)
         {
-            System.out.println(commentAndUserInfoList);
             return commentAndUserInfoList;
         }
     }

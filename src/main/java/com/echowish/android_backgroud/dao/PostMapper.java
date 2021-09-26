@@ -1,11 +1,11 @@
 package com.echowish.android_backgroud.dao;
 
+import com.echowish.android_backgroud.pojo.DetailPost;
 import com.echowish.android_backgroud.pojo.MyPublishPost;
 import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -23,11 +23,15 @@ public interface PostMapper {
     //获取帖子所有信息
     public Post queryPost(Integer postId);
 
+    //获取帖子以及发布者信息
+    public DetailPost queryDetailPost(Integer postId);
+
     //通过帖子ID获取标题
     public String queryPostTitleByPostId(Integer postId);
 
     //获取帖子部分信息 用于首页展示
     public List<PartPost> queryAllPartPost();
+
 
     //获取部分帖子信息 用于首页展示
     public List<PartPost> querySomePartPost(@Param(value = "start")Integer start,
@@ -39,6 +43,7 @@ public interface PostMapper {
     //通过关键字获取帖子部分信息
     public List<PartPost>  queryAllPartPostByKeyword(String keyword);
 
+
     //通过关键字 或者分区 获取帖子的部分信息
     public List<PartPost> queryAllPartPostByZoneAndKeyWord(@Param(value = "zone") String zone,
                                                            @Param(value = "keyword") String keyword);
@@ -47,4 +52,6 @@ public interface PostMapper {
 
     //通过userId 获取用户发布帖子的postId
     public List<Integer> queryMyPostIdByUserId(Integer userId);
+
+
 }

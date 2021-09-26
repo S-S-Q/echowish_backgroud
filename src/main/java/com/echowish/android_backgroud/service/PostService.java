@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.service;
 
+import com.echowish.android_backgroud.pojo.DetailPost;
 import com.echowish.android_backgroud.pojo.MyPublishPost;
 import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
@@ -23,6 +24,8 @@ public interface PostService {
     void deleteImage(String filename);
 
     Post queryPost(Integer postId);
+
+    DetailPost queryDetailPost(Integer postId);
 
     List<PartPost> queryPartPost(int start, int end);
 

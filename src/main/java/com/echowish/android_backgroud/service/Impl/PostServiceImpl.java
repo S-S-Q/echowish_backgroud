@@ -3,6 +3,7 @@ package com.echowish.android_backgroud.service.Impl;
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.CommentMapper;
 import com.echowish.android_backgroud.dao.PostMapper;
+import com.echowish.android_backgroud.pojo.DetailPost;
 import com.echowish.android_backgroud.pojo.MyPublishPost;
 import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
@@ -128,6 +129,24 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public DetailPost queryDetailPost(Integer postId) {
+        DetailPost detailPost=null;
+        try
+        {
+            if(postId==null)
+                return null;
+            detailPost=postMapper.queryDetailPost(postId);
+            //如果开头就大于 list的大小 那么就返回空
+            //如果尾部大于长度 则 返回 最大长度
+            return detailPost;
+        }
+        catch (Exception e)
+        {
+            return detailPost;
+        }
+    }
+
+    @Override
     public List<PartPost> queryPartPost(int start, int end) {
         System.out.println(start);
         try
@@ -138,7 +157,6 @@ public class PostServiceImpl implements PostService {
         }
         catch (Exception e)
         {
-
             return null;
         }
     }

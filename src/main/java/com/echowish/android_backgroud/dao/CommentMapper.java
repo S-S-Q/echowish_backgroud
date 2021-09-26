@@ -1,6 +1,7 @@
 package com.echowish.android_backgroud.dao;
 
 import com.echowish.android_backgroud.pojo.Comment;
+import com.echowish.android_backgroud.pojo.CommentAndUserInfo;
 import com.echowish.android_backgroud.pojo.OthersComment;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,8 @@ public interface CommentMapper {
     void deleteCommentByPostId(Integer postId);
 
     List<Comment> queryAllCommentsByPostId(Integer postId);
+
+    List<CommentAndUserInfo> queryAllCommentAndUserInfoByPostId(Integer postId);
 
     List<Comment> queryAllCommentsByUserId(Integer userId);
 

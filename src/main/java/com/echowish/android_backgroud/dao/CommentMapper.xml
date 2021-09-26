@@ -10,6 +10,15 @@
         <result property="time" column="time"></result>
     </resultMap>
 
+    <resultMap id="commentAndUserInfoResultMap" type="com.echowish.android_backgroud.pojo.CommentAndUserInfo">
+        <result property="postId" column="post_id"></result>
+        <result property="userId" column="user_id"></result>
+        <result property="content" column="content"></result>
+        <result property="time" column="time"></result>
+        <result property="name" column="name"></result>
+        <result property="headImage" column="head_image"></result>
+    </resultMap>
+
     <resultMap id="othersCommentResultType" type="com.echowish.android_backgroud.pojo.OthersComment">
         <result property="postId" column="post_id"></result>
         <result property="userId" column="user_id"></result>
@@ -45,4 +54,9 @@
     <select id="queryAllOthersCommentByPostId" parameterType="java.lang.Integer" resultMap="othersCommentResultType">
         select * from `comment` left join `user` on `comment`.user_id =`user`.user_id where `comment`.post_id=#{postId};
     </select>
+
+    <select id="queryAllCommentAndUserInfoByPostId" parameterType="java.lang.Integer" resultMap="commentAndUserInfoResultMap">
+        select * from `comment` left join `user` on `comment`.user_id =`user`.user_id where `comment`.post_id=#{postId};
+    </select>
+
 </mapper>

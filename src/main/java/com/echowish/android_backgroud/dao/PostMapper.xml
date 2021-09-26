@@ -15,6 +15,19 @@
         <result property="time" column="time"></result>
     </resultMap>
 
+    <resultMap id="detailPostResultMapper" type="com.echowish.android_backgroud.pojo.DetailPost">
+        <id property="postId" column="post_id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="title" column="title"></result>
+        <result property="zone" column="zone"></result>
+        <result property="content" column="content"></result>
+        <result property="reward" column="reward"></result>
+        <result property="postImage" column="post_image"></result>
+        <result property="time" column="time"></result>
+        <result property="name" column="name"></result>
+        <result property="headImage" column="head_image"></result>
+    </resultMap>
+
     <resultMap id="partPostResultMapper" type="com.echowish.android_backgroud.pojo.PartPost">
         <id property="postId" column="post_id"></id>
         <result property="title" column="title"></result>
@@ -29,6 +42,7 @@
         <result property="content" column="content"></result>
         <result property="time" column="time"></result>
     </resultMap>
+
 
 
     <insert id="insertPost" parameterType="com.echowish.android_backgroud.pojo.Post">
@@ -46,6 +60,10 @@
 
     <select id="queryPost" resultMap="postResultMapper" parameterType="java.lang.Integer">
         select *from post where post_id=#{postId};
+    </select>
+
+    <select id="queryDetailPost" resultMap="detailPostResultMapper" parameterType="java.lang.Integer">
+        select *from post left join user on post.user_id =user.user_id where post_id=#{postId};
     </select>
 
     <select id="queryPostTitleByPostId" resultType="java.lang.String" parameterType="java.lang.Integer">
@@ -79,4 +97,5 @@
     <select id="queryMyPostIdByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select post_id from post where user_id=#{userId};
     </select>
+
 </mapper>

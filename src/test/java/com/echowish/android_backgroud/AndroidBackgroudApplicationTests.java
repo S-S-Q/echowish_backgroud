@@ -43,7 +43,7 @@ class AndroidBackgroudApplicationTests {
     void get()
     {
 //        commentMapper.queryAllCommentsByPostId(1);
-        System.out.println(commentMapper.queryAllOthersCommentByPostId(7).size());;
+        System.out.println(postMapper.queryDetailPost(7).name);;
 //        userMapper.queryUserByUserId(1);
 //       commentService.queryAllMyCommentBuUserId(3);
     }
