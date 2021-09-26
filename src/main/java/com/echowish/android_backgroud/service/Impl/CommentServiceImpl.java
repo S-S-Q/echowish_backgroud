@@ -4,10 +4,7 @@ import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.CommentMapper;
 import com.echowish.android_backgroud.dao.PostMapper;
 import com.echowish.android_backgroud.dao.UserMapper;
-import com.echowish.android_backgroud.pojo.Comment;
-import com.echowish.android_backgroud.pojo.CommentAndUserInfo;
-import com.echowish.android_backgroud.pojo.MyComment;
-import com.echowish.android_backgroud.pojo.User;
+import com.echowish.android_backgroud.pojo.*;
 import com.echowish.android_backgroud.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,6 +89,23 @@ public class CommentServiceImpl implements CommentService {
         catch (Exception e)
         {
             return myCommentList;
+        }
+    }
+
+    @Override
+    public List<OthersComment> queryAllCommentInMyPosts(Integer userId) {
+        try {
+            List<Integer> myPostIdList=postMapper.queryMyPostIdByUserId(userId);
+            List<OthersComment> othersCommentList=new LinkedList<>();
+            for(Integer postId:myPostIdList)
+            {
+                othersCommentList.addAll(commentMapper.queryAllOthersCommentByPostId(postId));
+            }
+            return othersCommentList;
+        }
+        catch (Exception e)
+        {
+            return null;
         }
     }
 }

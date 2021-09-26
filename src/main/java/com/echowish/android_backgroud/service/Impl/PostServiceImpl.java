@@ -129,20 +129,16 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PartPost> queryPartPost(int start, int end) {
-        List returnList=null;
+        System.out.println(start);
         try
         {
-            List list=postMapper.queryAllPartPost();
-            //如果开头就大于 list的大小 那么就返回空
-            if(start>list.size())
-                return null;
-            //如果尾部大于长度 则 返回 最大长度
-            end=end>list.size()?list.size():end;
-            returnList=list.subList(start,end);
-            return returnList;
+            List list=postMapper.querySomePartPost(start,end);
+            System.out.println(list);
+            return list;
         }
         catch (Exception e)
         {
+
             return null;
         }
     }

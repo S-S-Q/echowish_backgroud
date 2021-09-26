@@ -4,6 +4,7 @@ package com.echowish.android_backgroud.controller;
 import com.echowish.android_backgroud.pojo.Comment;
 import com.echowish.android_backgroud.pojo.CommentAndUserInfo;
 import com.echowish.android_backgroud.pojo.MyComment;
+import com.echowish.android_backgroud.pojo.OthersComment;
 import com.echowish.android_backgroud.service.CommentService;
 import org.mybatis.spring.annotation.MapperScans;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,12 @@ public class CommentServiceController {
     public List<MyComment> queryMyCommentByUserId(@RequestParam(value = "userId")Integer userId)
     {
         return commentService.queryAllMyCommentBuUserId(userId);
+    }
+
+    @GetMapping("queryOthersCommentByUserId")
+    @ResponseBody
+    public  List<OthersComment> queryOthersCommentByUserId(@RequestParam(value = "userId")Integer userId)
+    {
+        return commentService.queryAllCommentInMyPosts(userId);
     }
 }

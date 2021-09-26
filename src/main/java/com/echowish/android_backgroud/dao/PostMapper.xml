@@ -56,6 +56,10 @@
         select post_id,title,zone,content from post;
     </select>
 
+    <select id="querySomePartPost" resultMap="partPostResultMapper">
+        select post_id,title,zone,content from post ORDER BY `time` limit #{start},#{end};
+    </select>
+
     <select id="queryAllPartPostByZone" resultMap="partPostResultMapper" parameterType="java.lang.String">
         select post_id,title,zone,content from post  where zone=#{zone};
     </select>
@@ -70,5 +74,9 @@
 
     <select id="queryMyPublishPostByUserId" resultMap="myPublishPostResultMapper">
         select post_id,title,zone,content,time from post  where user_id=#{userId};
+    </select>
+
+    <select id="queryMyPostIdByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select post_id from post where user_id=#{userId};
     </select>
 </mapper>

@@ -10,6 +10,17 @@
         <result property="time" column="time"></result>
     </resultMap>
 
+    <resultMap id="othersCommentResultType" type="com.echowish.android_backgroud.pojo.OthersComment">
+        <result property="postId" column="post_id"></result>
+        <result property="userId" column="user_id"></result>
+        <result property="content" column="content"></result>
+        <result property="time" column="time"></result>
+        <association property="user" column="user_id">
+            <result property="name" column="name"></result>
+        </association>
+    </resultMap>
+
+
     <insert id="insertNewComment" parameterType="com.echowish.android_backgroud.pojo.Comment">
         insert into comment(post_id,user_id,content,time)
         values (#{postId},#{userId},#{content},#{time});
@@ -31,4 +42,7 @@
         select * from comment where user_id=#{userId};
     </select>
 
+    <select id="queryAllOthersCommentByPostId" parameterType="java.lang.Integer" resultMap="othersCommentResultType">
+        select * from `comment` left join `user` on `comment`.user_id =`user`.user_id where `comment`.post_id=#{postId};
+    </select>
 </mapper>

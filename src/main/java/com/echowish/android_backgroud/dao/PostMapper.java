@@ -12,9 +12,9 @@ import java.util.List;
 @Component
 public interface PostMapper {
     //向数据库中插入新的帖子
- public void insertPost(Post post);
+    public void insertPost(Post post);
 
- //通过帖子id查找图片路径
+   //通过帖子id查找图片路径
     public String queryImageByPostId(Integer postId);
 
    //通过帖子id删除帖子
@@ -29,6 +29,10 @@ public interface PostMapper {
     //获取帖子部分信息 用于首页展示
     public List<PartPost> queryAllPartPost();
 
+    //获取部分帖子信息 用于首页展示
+    public List<PartPost> querySomePartPost(@Param(value = "start")Integer start,
+                                             @Param(value = "end")Integer end);
+
     //获取帖子的部分信息 通过分区
     public  List<PartPost> queryAllPartPostByZone(String zone);
 
@@ -40,4 +44,7 @@ public interface PostMapper {
                                                            @Param(value = "keyword") String keyword);
 
     public List<MyPublishPost> queryMyPublishPostByUserId(Integer userId);
+
+    //通过userId 获取用户发布帖子的postId
+    public List<Integer> queryMyPostIdByUserId(Integer userId);
 }
