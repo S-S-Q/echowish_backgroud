@@ -1,7 +1,11 @@
 package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.constant.ReactInfo;
+import com.echowish.android_backgroud.dao.ConcernMapper;
 import com.echowish.android_backgroud.dao.UserMapper;
+import com.echowish.android_backgroud.pojo.Concern;
+import com.echowish.android_backgroud.pojo.Friend;
+import com.echowish.android_backgroud.pojo.MyConcern;
 import com.echowish.android_backgroud.pojo.User;
 import com.echowish.android_backgroud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -24,6 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    ConcernMapper concernMapper;
 
     @Override
     public String registerNewUsers(User user) {
@@ -146,4 +153,25 @@ public class UserServiceImpl implements UserService {
             return ReactInfo.FAIL_INFO;
         }
     }
+
+    @Override
+    public Friend getFriendMessage(Integer userId,Integer friId) {
+        Friend friend=null;
+        try
+        {
+            Concern concern=concernMapper.queryIsConcern(userId,friId);
+            friend=userMapper.queryFriendByUserId(userId);
+            if (concern!=null)
+                friend.isConcern=true;
+            else
+                friend.isConcern=false;
+            return friend;
+        }
+        catch (Exception e)
+        {
+            return friend;
+        }
+    }
+
+
 }

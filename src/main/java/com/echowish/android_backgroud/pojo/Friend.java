@@ -4,20 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetailPost {
-    public Integer postId;
+public class Friend {
     public Integer userId;
-    public String zone;
-    public String title;
-    public String content;
-    public String reward;
-    public String postImage;
-    public Date time;
     public String name;
+    public Integer sex;
+    public Integer grade;
+    public String campus;
     public String headImage;
+    public boolean isConcern;
 }

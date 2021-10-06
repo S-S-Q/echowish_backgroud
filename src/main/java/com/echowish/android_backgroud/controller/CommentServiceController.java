@@ -32,7 +32,6 @@ public class CommentServiceController {
                                      @RequestParam(value = "content")String content,
                                      @RequestParam(value = "time")@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")Date time)
     {
-        System.out.println(postId+" "+userId+" "+content);
         return commentService.publishNewComment(new Comment(postId,userId,content, time));
     }
 
@@ -43,6 +42,7 @@ public class CommentServiceController {
                                 @RequestParam(value = "content")String content,
                                 @RequestParam(value = "time")@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")Date time)
     {
+        System.out.println(time);
         return commentService.deleteMyComment(new Comment(postId,userId,content, time));
     }
 

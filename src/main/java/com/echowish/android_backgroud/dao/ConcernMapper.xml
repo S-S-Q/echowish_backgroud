@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echowish.android_backgroud.dao.ConcernMapper">
+
+    <resultMap id="concernResultMapper" type="com.echowish.android_backgroud.pojo.Concern">
+        <result property="hostId" column="host_id"></result>
+        <result property="friId" column="fri_id"></result>
+    </resultMap>
+
+    <resultMap id="myConcernResultMapper" type="com.echowish.android_backgroud.pojo.MyConcern">
+        <result property="hostId" column="host_id"></result>
+        <result property="friId" column="fri_id"></result>
+        <result property="name" column="name"></result>
+        <result property="headImage" column="head_image"></result>
+    </resultMap>
+
+    <insert id="insertConcern">
+        insert into concern values(#{hostId},#{friId});
+    </insert>
+
+    <delete id="cancelConcern">
+        delete from cancern where host_id=#{hostId} and fri_id=#{friId};
+    </delete>
+
+    <select id="queryIsConcern" resultMap="concernResultMapper">
+        select * from   concern where host_id=#{hostId} and fri_id=#{friId};
+    </select>
+
+    <select id="queryAllMyConcern" resultMap="myConcernResultMapper">
+        select host_id,fri_id,`name`,head_image from   concern left join `user` on concern.fri_id=`user`.user_id where host_id=#{hostId};
+    </select>
+</mapper>

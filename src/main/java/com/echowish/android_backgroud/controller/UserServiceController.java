@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.controller;
 
+import com.echowish.android_backgroud.pojo.Friend;
 import com.echowish.android_backgroud.pojo.User;
 import com.echowish.android_backgroud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +74,13 @@ public class UserServiceController {
         user.grade=grade;
         user.campus=campus;
         return userService.updateUserInfo(user);
+    }
+
+    @GetMapping("getFriendMessage")
+    @ResponseBody
+    Friend getFriendMessage(@RequestParam("userId")Integer userId,
+                            @RequestParam("friId")Integer friId)
+    {
+        return userService.getFriendMessage(userId,friId);
     }
 }

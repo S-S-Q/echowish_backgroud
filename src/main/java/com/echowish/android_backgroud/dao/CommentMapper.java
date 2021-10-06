@@ -16,6 +16,8 @@ public interface CommentMapper {
 
     void deleteCommentByPostId(Integer postId);
 
+    void deleteCommentByDate(String time);
+
     List<Comment> queryAllCommentsByPostId(Integer postId);
 
     List<CommentAndUserInfo> queryAllCommentAndUserInfoByPostId(Integer postId);

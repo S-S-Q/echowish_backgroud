@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.dao;
 
+import com.echowish.android_backgroud.pojo.Friend;
 import com.echowish.android_backgroud.pojo.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -23,5 +24,6 @@ public interface UserMapper {
 
     void updateUserInfo(User user);
 
-
+    //获取其他人信息 过滤掉账号 密码信息
+    Friend queryFriendByUserId(Integer userId);
 }

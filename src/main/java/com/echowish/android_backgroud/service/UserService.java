@@ -1,9 +1,13 @@
 package com.echowish.android_backgroud.service;
 
+import com.echowish.android_backgroud.pojo.Friend;
+import com.echowish.android_backgroud.pojo.MyConcern;
 import com.echowish.android_backgroud.pojo.User;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -24,4 +28,9 @@ public interface UserService {
 
     //更新资料
     String updateUserInfo(User newuser);
+
+    //获取朋友信息
+    Friend getFriendMessage(Integer userId,Integer friId);
+
+
 }

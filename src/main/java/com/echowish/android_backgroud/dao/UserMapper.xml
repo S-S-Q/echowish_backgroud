@@ -15,6 +15,14 @@
         <result property="headImage" column="head_image"></result>
     </resultMap>
 
+    <resultMap id="friendsResultMapper" type="com.echowish.android_backgroud.pojo.Friend">
+        <id property="userId" column="user_id"></id>
+        <result property="name" column="name"></result>
+        <result property="sex" column="sex"></result>
+        <result property="grade" column="grade"></result>
+        <result property="campus" column="campus"></result>
+        <result property="headImage" column="head_image"></result>
+    </resultMap>
 
     <insert id="insertUser" parameterType="com.echowish.android_backgroud.pojo.User">
         insert into user(user_id,account,password)
@@ -44,4 +52,8 @@
     <update id="updateUserInfo" parameterType="com.echowish.android_backgroud.pojo.User">
         update `user` set name=#{name},sex=#{sex},grade=#{grade},campus=#{campus} where user_id=#{userId};
     </update>
+
+    <select id="queryFriendByUserId" parameterType="java.lang.Integer" resultMap="friendsResultMapper">
+        select * from `user` where user_id=#{userId};
+    </select>
 </mapper>

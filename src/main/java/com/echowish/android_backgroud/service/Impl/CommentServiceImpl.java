@@ -9,6 +9,7 @@ import com.echowish.android_backgroud.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,7 +42,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public String deleteMyComment(Comment comment) {
         try{
-            commentMapper.deleteComment(comment);
+            SimpleDateFormat filenameDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String fileTime=filenameDateFormat.format(comment.getTime());
+            commentMapper.deleteCommentByDate(fileTime);
             return ReactInfo.SUCCESS_INFO;
 
         }catch (Exception e)

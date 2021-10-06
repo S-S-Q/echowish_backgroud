@@ -133,15 +133,13 @@ public class PostServiceImpl implements PostService {
         DetailPost detailPost=null;
         try
         {
-            if(postId==null)
-                return null;
             detailPost=postMapper.queryDetailPost(postId);
-            //如果开头就大于 list的大小 那么就返回空
-            //如果尾部大于长度 则 返回 最大长度
+            System.out.println(detailPost);
             return detailPost;
         }
         catch (Exception e)
         {
+            System.out.println("失败");
             return detailPost;
         }
     }
