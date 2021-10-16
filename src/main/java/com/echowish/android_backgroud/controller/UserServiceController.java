@@ -25,7 +25,7 @@ public class UserServiceController {
         User user=new User();
         user.setAccount(account);
         user.setPassword(password);
-
+        System.out.println(account+password);
         return userService.registerNewUsers(user);
     }
 

@@ -23,7 +23,7 @@ public class ConcernController {
     public String concernNewFriend(@RequestParam(value = "hostId")Integer hostId,
                                    @RequestParam(value = "friId")Integer friId)
     {
-        System.out.println(hostId);
+        System.out.println(friId);
         return concernService.concernNewFriend(hostId,friId);
     }
 

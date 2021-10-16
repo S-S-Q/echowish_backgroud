@@ -31,7 +31,6 @@ public class ConcernServiceImpl implements ConcernService {
     @Override
     public String cancelFriend(Integer hostId, Integer friId) {
         try{
-            System.out.println(hostId+friId);
             concernMapper.cancelConcern(hostId,friId);
             return ReactInfo.SUCCESS_INFO;
         }

@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,6 @@ public class MyPublishPost {
     public String zone;
     public String title;
     public String content;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     public Date time;
 }

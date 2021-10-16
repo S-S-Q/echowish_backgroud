@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.service.Impl;
 
+import com.echowish.android_backgroud.bean.ServerPathPropBean;
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.ConcernMapper;
 import com.echowish.android_backgroud.dao.UserMapper;
@@ -31,6 +32,8 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
     @Autowired
     ConcernMapper concernMapper;
+    @Autowired
+    ServerPathPropBean serverPathPropBean;
 
     @Override
     public String registerNewUsers(User user) {
@@ -105,7 +108,7 @@ public class UserServiceImpl implements UserService {
             return ReactInfo.FAIL_INFO;
         try(InputStream inputStream=file.getInputStream())
         {
-            Path uploadPath= Paths.get(ReactInfo.LOAD_HEAD_IMAGE_PATH);
+            Path uploadPath= Paths.get(serverPathPropBean.getHeadImagePath());
             if(!uploadPath.toFile().exists())
                 uploadPath.toFile().mkdir();
             String filename= UUID.randomUUID().toString().replace("-","");
@@ -115,7 +118,7 @@ public class UserServiceImpl implements UserService {
             String deleteFilename=userMapper.queryImageByUserId(userId);
             if(!deleteFilename.equals(""))
             deleteImage(deleteFilename);
-            Files.copy(inputStream, Paths.get(ReactInfo.LOAD_HEAD_IMAGE_PATH).resolve(filename), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(inputStream, Paths.get(serverPathPropBean.getHeadImagePath()).resolve(filename), StandardCopyOption.REPLACE_EXISTING);
             return ReactInfo.SUCCESS_INFO;
         }
         catch (Exception e)

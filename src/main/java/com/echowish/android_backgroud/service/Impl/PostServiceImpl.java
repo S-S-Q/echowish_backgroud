@@ -1,5 +1,6 @@
 package com.echowish.android_backgroud.service.Impl;
 
+import com.echowish.android_backgroud.bean.ServerPathPropBean;
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.CommentMapper;
 import com.echowish.android_backgroud.dao.PostMapper;
@@ -31,6 +32,8 @@ public class PostServiceImpl implements PostService {
     PostMapper postMapper;
     @Autowired
     CommentMapper commentMapper;
+    @Autowired
+    ServerPathPropBean serverPathPropBean;
 
     //添加新的帖子 并且判断帖子是否符合条件
     @Override
@@ -79,11 +82,11 @@ public class PostServiceImpl implements PostService {
             return true;
         try(InputStream inputStream=file.getInputStream())
         {
-            Path uploadPath= Paths.get(ReactInfo.LOAD_IMAGE_PATH);
+            Path uploadPath= Paths.get(serverPathPropBean.getImagePath());
             if(!uploadPath.toFile().exists())
                 uploadPath.toFile().mkdir();
 
-            Files.copy(inputStream, Paths.get(ReactInfo.LOAD_IMAGE_PATH).resolve(filename), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(inputStream, Paths.get(serverPathPropBean.getImagePath()).resolve(filename), StandardCopyOption.REPLACE_EXISTING);
             return true;
         }
         catch (Exception e)
@@ -98,7 +101,7 @@ public class PostServiceImpl implements PostService {
         if(filename==null||filename.isEmpty())
             return;
         try{
-            File Image=new File(String.valueOf(Paths.get(ReactInfo.LOAD_IMAGE_PATH).resolve(filename)));
+            File Image=new File(String.valueOf(Paths.get(serverPathPropBean.getImagePath()).resolve(filename)));
             if(!Image.exists())
                 return;
             else

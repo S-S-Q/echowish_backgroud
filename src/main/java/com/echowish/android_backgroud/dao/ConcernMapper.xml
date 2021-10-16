@@ -21,7 +21,7 @@
     </insert>
 
     <delete id="cancelConcern">
-        delete from cancern where host_id=#{hostId} and fri_id=#{friId};
+        delete from concern where host_id=#{hostId} and fri_id=#{friId};
     </delete>
 
     <select id="queryIsConcern" resultMap="concernResultMapper">
