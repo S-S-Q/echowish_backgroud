@@ -2,17 +2,14 @@ package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.bean.ServerPathPropBean;
 import com.echowish.android_backgroud.constant.ReactInfo;
-import com.echowish.android_backgroud.dao.CommentMapper;
 import com.echowish.android_backgroud.dao.PostMapper;
 import com.echowish.android_backgroud.pojo.DetailPost;
 import com.echowish.android_backgroud.pojo.MyPublishPost;
 import com.echowish.android_backgroud.pojo.PartPost;
 import com.echowish.android_backgroud.pojo.Post;
+import com.echowish.android_backgroud.service.CommentService;
 import com.echowish.android_backgroud.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -31,7 +28,7 @@ public class PostServiceImpl implements PostService {
     @Autowired
     PostMapper postMapper;
     @Autowired
-    CommentMapper commentMapper;
+    CommentService commentService;
     @Autowired
     ServerPathPropBean serverPathPropBean;
 
@@ -62,10 +59,11 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    //删帖子记得删图片
     @Override
     public String deletePost(int postId) {
         try {
-            commentMapper.deleteCommentByPostId(postId);
+            commentService.deleteAllCommentByPostId(postId);
             postMapper.deleteByPostId(postId);
             return ReactInfo.SUCCESS_INFO;
         }
@@ -129,6 +127,34 @@ public class PostServiceImpl implements PostService {
         {
             return post;
         }
+    }
+
+    @Override
+    public String queryPostTitleByPostId(Integer postId) {
+        String title=null;
+        try
+        {
+            title=postMapper.queryPostTitleByPostId(postId);
+
+        }
+        catch (Exception e)
+        {
+
+        }
+        return  title;
+    }
+
+    @Override
+    public List<Integer> queryMyPostIdByUserId(Integer userId) {
+        List<Integer>myPostIdList=new LinkedList<>();
+        try {
+            myPostIdList=postMapper.queryMyPostIdByUserId(userId);
+        }
+        catch (Exception e)
+        {
+
+        }
+        return myPostIdList;
     }
 
     @Override
@@ -225,43 +251,5 @@ public class PostServiceImpl implements PostService {
         {
             return ansList;
         }
-    }
-
-
-    //通过图片路径查找图片 测试用 记得删除
-    @Override
-    public ResponseEntity<FileSystemResource> downloadImage(String filename) {
-        if(filename==null)
-            return null;
-        //通过路径 将该路径下的文件 转化为文件类
-        File file=Paths.get(ReactInfo.LOAD_IMAGE_PATH).resolve(filename).toFile();
-        //文件存在且可读
-        if(file.exists()&&file.canRead())
-        {
-            return ResponseEntity.ok()
-                    .contentType(file.getName().contains("jpg")? MediaType.IMAGE_JPEG:MediaType.IMAGE_PNG)
-                    .body(new FileSystemResource(file));
-        }
-        else
-            return null;
-    }
-
-    //通过帖子id获取图片
-    @Override
-    public ResponseEntity<FileSystemResource> downloadImage(Integer postId) {
-        String filename=postMapper.queryImageByPostId(postId);
-        if(filename==null)
-            return null;
-        //通过路径 将该路径下的文件 转化为文件类
-        File file=Paths.get(ReactInfo.LOAD_IMAGE_PATH).resolve(filename).toFile();
-        //文件存在且可读
-        if(file.exists()&&file.canRead())
-        {
-            return ResponseEntity.ok()
-                    .contentType(file.getName().contains("jpg")? MediaType.IMAGE_JPEG:MediaType.IMAGE_PNG)
-                    .body(new FileSystemResource(file));
-        }
-        else
-            return null;
     }
 }

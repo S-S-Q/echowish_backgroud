@@ -25,6 +25,10 @@ public interface PostService {
 
     Post queryPost(Integer postId);
 
+    String queryPostTitleByPostId(Integer postId);
+
+    List<Integer> queryMyPostIdByUserId(Integer userId);
+
     DetailPost queryDetailPost(Integer postId);
 
     List<PartPost> queryPartPost(int start, int end);
@@ -36,8 +40,4 @@ public interface PostService {
     List<PartPost> queryPartPostByZoneAndKeyWord(String zone,String keyword);
 
     List<MyPublishPost> queryMyPublishPostByUserId(Integer userId);
-
-    ResponseEntity<FileSystemResource> downloadImage(String filename);
-
-    ResponseEntity<FileSystemResource> downloadImage(Integer postId);
 }

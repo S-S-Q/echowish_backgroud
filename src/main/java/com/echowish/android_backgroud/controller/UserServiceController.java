@@ -52,13 +52,6 @@ public class UserServiceController {
         return userService.loadImage(image,userId);
     }
 
-    @PostMapping("getUserHeadImage")
-    @ResponseBody
-    ResponseEntity<FileSystemResource> getUserHeadImage(@RequestParam("userId")Integer userId)
-    {
-        return userService.downloadImage(userId);
-    }
-
     @GetMapping("updateUserInfo")
     @ResponseBody
     String updateUserInfo(@RequestParam(value = "userId")Integer userId,

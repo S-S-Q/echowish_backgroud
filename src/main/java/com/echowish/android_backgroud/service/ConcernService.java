@@ -14,4 +14,7 @@ public interface ConcernService {
 
     //获得我的关注
     List<MyConcern> getAllMyConcern(Integer hostId);
+
+    //获取是否关注
+    Boolean queryIsConcern(Integer hostId,Integer friId);
 }

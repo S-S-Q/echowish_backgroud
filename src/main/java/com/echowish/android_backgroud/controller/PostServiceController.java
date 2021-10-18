@@ -97,11 +97,4 @@ public class PostServiceController {
     {
         return postService.queryMyPublishPostByUserId(userId);
     }
-
-    @PostMapping("download")
-    @ResponseBody
-    public ResponseEntity<FileSystemResource> downloadImage(@RequestParam(value = "postId",required = true) Integer postId)
-    {
-        return postService.downloadImage(postId);
-    }
 }

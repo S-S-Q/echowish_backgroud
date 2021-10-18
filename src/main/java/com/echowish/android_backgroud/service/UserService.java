@@ -18,7 +18,6 @@ public interface UserService {
 
     User getUserMessage(int userId);
 
-    ResponseEntity<FileSystemResource> downloadImage(Integer userId);
 
     //加载图片 不是接口
     String loadImage(MultipartFile file, int userId);

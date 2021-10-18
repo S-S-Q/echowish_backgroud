@@ -2,17 +2,12 @@ package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.bean.ServerPathPropBean;
 import com.echowish.android_backgroud.constant.ReactInfo;
-import com.echowish.android_backgroud.dao.ConcernMapper;
 import com.echowish.android_backgroud.dao.UserMapper;
-import com.echowish.android_backgroud.pojo.Concern;
 import com.echowish.android_backgroud.pojo.Friend;
-import com.echowish.android_backgroud.pojo.MyConcern;
 import com.echowish.android_backgroud.pojo.User;
+import com.echowish.android_backgroud.service.ConcernService;
 import com.echowish.android_backgroud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -31,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
     @Autowired
-    ConcernMapper concernMapper;
+    ConcernService concernService;
     @Autowired
     ServerPathPropBean serverPathPropBean;
 
@@ -85,24 +79,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<FileSystemResource> downloadImage(Integer userId) {
-        String filename=userMapper.queryImageByUserId(userId);
-        if(filename==null)
-            return null;
-        //通过路径 将该路径下的文件 转化为文件类
-        File file= Paths.get(ReactInfo.LOAD_HEAD_IMAGE_PATH).resolve(filename).toFile();
-        //文件存在且可读
-        if(file.exists()&&file.canRead())
-        {
-            return ResponseEntity.ok()
-                    .contentType(file.getName().contains("jpg")? MediaType.IMAGE_JPEG:MediaType.IMAGE_PNG)
-                    .body(new FileSystemResource(file));
-        }
-        else
-            return null;
-    }
-
-    @Override
     public String loadImage(MultipartFile file, int userId) {
         if(file==null||file.isEmpty())
             return ReactInfo.FAIL_INFO;
@@ -113,9 +89,10 @@ public class UserServiceImpl implements UserService {
                 uploadPath.toFile().mkdir();
             String filename= UUID.randomUUID().toString().replace("-","");
             filename=filename+userId+".jpg";
-            userMapper.updateImageByUserId(userId,filename);
 
             String deleteFilename=userMapper.queryImageByUserId(userId);
+            userMapper.updateImageByUserId(userId,filename);
+
             if(!deleteFilename.equals(""))
             deleteImage(deleteFilename);
             Files.copy(inputStream, Paths.get(serverPathPropBean.getHeadImagePath()).resolve(filename), StandardCopyOption.REPLACE_EXISTING);
@@ -133,7 +110,7 @@ public class UserServiceImpl implements UserService {
         if(filename==null||filename.isEmpty())
             return;
         try{
-            File Image=new File(String.valueOf(Paths.get(ReactInfo.LOAD_HEAD_IMAGE_PATH).resolve(filename)));
+            File Image=new File(String.valueOf(Paths.get(serverPathPropBean.getHeadImagePath()).resolve(filename)));
             if(!Image.exists())
                 return;
             else
@@ -162,12 +139,8 @@ public class UserServiceImpl implements UserService {
         Friend friend=null;
         try
         {
-            Concern concern=concernMapper.queryIsConcern(userId,friId);
             friend=userMapper.queryFriendByUserId(userId);
-            if (concern!=null)
-                friend.isConcern=true;
-            else
-                friend.isConcern=false;
+            friend.isConcern=concernService.queryIsConcern(userId,friId);
             return friend;
         }
         catch (Exception e)
@@ -175,6 +148,4 @@ public class UserServiceImpl implements UserService {
             return friend;
         }
     }
-
-
 }

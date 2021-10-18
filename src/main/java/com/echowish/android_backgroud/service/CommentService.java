@@ -14,9 +14,12 @@ public interface CommentService {
 
     public String deleteMyComment(Comment comment);
 
+    String deleteAllCommentByPostId(Integer postId);
+
     public List<CommentAndUserInfo> queryAllCommentByPostId(Integer postId);
 
     public List<MyComment> queryAllMyCommentBuUserId(Integer userId);
+
 
     //获取自己帖子中别人回复的信息
     public List<OthersComment> queryAllCommentInMyPosts(Integer userId);

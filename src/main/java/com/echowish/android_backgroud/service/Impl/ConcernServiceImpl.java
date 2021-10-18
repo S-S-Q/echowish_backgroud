@@ -2,6 +2,7 @@ package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.ConcernMapper;
+import com.echowish.android_backgroud.pojo.Concern;
 import com.echowish.android_backgroud.pojo.MyConcern;
 import com.echowish.android_backgroud.service.ConcernService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,21 @@ public class ConcernServiceImpl implements ConcernService {
         catch (Exception e)
         {
             return myConcernList;
+        }
+    }
+
+    @Override
+    public Boolean queryIsConcern(Integer hostId, Integer friId) {
+        try {
+            Concern concern=concernMapper.queryIsConcern(hostId,friId);
+            if (concern!=null)
+                return  true;
+            else
+                return false;
+        }
+        catch (Exception e)
+        {
+            return  false;
         }
     }
 }

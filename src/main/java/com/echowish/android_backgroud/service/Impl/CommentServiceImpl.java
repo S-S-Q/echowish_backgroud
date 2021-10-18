@@ -2,18 +2,15 @@ package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.CommentMapper;
-import com.echowish.android_backgroud.dao.PostMapper;
-import com.echowish.android_backgroud.dao.UserMapper;
 import com.echowish.android_backgroud.pojo.*;
 import com.echowish.android_backgroud.service.CommentService;
+import com.echowish.android_backgroud.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -21,10 +18,7 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     CommentMapper commentMapper;
     @Autowired
-    UserMapper userMapper;
-    @Autowired
-    PostMapper postMapper;
-
+    PostService postService;
 
     @Override
     public String publishNewComment(Comment comment) {
@@ -53,6 +47,18 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
+    @Override
+    public String deleteAllCommentByPostId(Integer postId) {
+        try {
+            commentMapper.deleteCommentByPostId(postId);
+            return ReactInfo.SUCCESS_INFO;
+        }
+        catch (Exception e)
+        {
+            return ReactInfo.FAIL_INFO;
+        }
+    }
+
     //多表查询优于单表多次查询 建议有空优化
     @Override
     public List<CommentAndUserInfo> queryAllCommentByPostId(Integer postId) {
@@ -76,7 +82,7 @@ public class CommentServiceImpl implements CommentService {
            List<Comment>commentList= commentMapper.queryAllCommentsByUserId(userId);
            for(Comment comment:commentList)
            {
-               String postTitle =postMapper.queryPostTitleByPostId(comment.getPostId());
+               String postTitle =postService.queryPostTitleByPostId(comment.postId);
                MyComment myComment=new MyComment(comment,postTitle);
                myCommentList.add(myComment);
            }
@@ -91,7 +97,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<OthersComment> queryAllCommentInMyPosts(Integer userId) {
         try {
-            List<Integer> myPostIdList=postMapper.queryMyPostIdByUserId(userId);
+            List<Integer> myPostIdList=postService.queryMyPostIdByUserId(userId);
             List<OthersComment> othersCommentList=new LinkedList<>();
             for(Integer postId:myPostIdList)
             {
