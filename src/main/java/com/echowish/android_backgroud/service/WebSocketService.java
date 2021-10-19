@@ -9,7 +9,7 @@ public interface WebSocketService {
      * @param userId
      *
      */
-    void onOpen(Session session,Integer userId);
+    void onOpen(Session session,Integer userId,Integer otherUserId);
 
     /**
      * 连接关闭调用的方法

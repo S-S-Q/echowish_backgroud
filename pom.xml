@@ -37,6 +37,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -45,6 +46,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+<!--        可以自己弹出配置文件提示 建议在打包插件下 将它打包忽略-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
 <!--        websocket相关依赖-->
@@ -86,6 +94,7 @@
                <includes>
                    <include>application.properties</include>
                    <include>locatepath.properties</include>
+                   <include>banner.txt</include>
                </includes>
            </resource>
         </resources>

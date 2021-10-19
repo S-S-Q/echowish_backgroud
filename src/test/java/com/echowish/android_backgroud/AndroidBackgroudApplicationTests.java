@@ -1,9 +1,7 @@
 package com.echowish.android_backgroud;
 
-import com.echowish.android_backgroud.dao.CommentMapper;
-import com.echowish.android_backgroud.dao.ConcernMapper;
-import com.echowish.android_backgroud.dao.PostMapper;
-import com.echowish.android_backgroud.dao.UserMapper;
+import com.echowish.android_backgroud.dao.*;
+import com.echowish.android_backgroud.pojo.Chat;
 import com.echowish.android_backgroud.pojo.Comment;
 import com.echowish.android_backgroud.pojo.Post;
 import com.echowish.android_backgroud.service.CommentService;
@@ -13,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Date;
 
 @SpringBootTest
 class AndroidBackgroudApplicationTests {
@@ -33,6 +31,8 @@ class AndroidBackgroudApplicationTests {
     CommentService commentService;
     @Autowired
     ConcernMapper concernMapper;
+    @Autowired
+    ChatMapper chatMapper;
 
 
     @Test
@@ -50,7 +50,8 @@ class AndroidBackgroudApplicationTests {
     void get()
     {
 //        commentMapper.queryAllCommentsByPostId(1);
-        System.out.println(concernMapper.queryAllMyConcern(2));;
+//        chatMapper.insertNewChat(new Chat(1,2,new Date(),"SSQ"));
+        System.out.println(chatMapper.queryChatMessage(1,2));
 //        userMapper.queryUserByUserId(1);
 //       commentService.queryAllMyCommentBuUserId(3);
     }

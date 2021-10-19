@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echowish.android_backgroud.dao.ChatMapper">
+    <resultMap id="chatResultMapper" type="com.echowish.android_backgroud.pojo.Chat">
+        <result property="myId" column="my_id"></result>
+        <result property="otherId" column="other_id"></result>
+        <result property="time" column="time"></result>
+        <result property="content" column="content"></result>
+    </resultMap>
+
+    <insert id="insertNewChat" parameterType="com.echowish.android_backgroud.pojo.Chat">
+        insert into chat(content,my_id,other_id,time) values(#{content},#{myId},#{otherId},#{time});
+    </insert>
+
+    <select id="queryChatMessage" resultMap="chatResultMapper">
+        select * from chat where my_id=#{myId} and other_Id=#{otherId};
+    </select>
+
+    <delete id="deleteChat">
+        delete from chat where my_id=#{myId} and other_Id=#{otherId};
+    </delete>
+
+</mapper>

@@ -1,12 +1,19 @@
 package com.echowish.android_backgroud.service.Impl;
 
+import com.echowish.android_backgroud.dao.ChatMapper;
+import com.echowish.android_backgroud.pojo.Chat;
 import com.echowish.android_backgroud.service.WebSocketService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 //传入 自己的id 以及想聊天对象的id
@@ -15,6 +22,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class WebSocketServiceImpl implements WebSocketService {
 
+    static ChatMapper chatMapper;
+
+    @Autowired
+    public void setChatService(ChatMapper chatMapper) {
+        this.chatMapper = chatMapper;
+    }
 
     //记录userId对应的websocketImpl
     private static ConcurrentHashMap<Integer,Session> websocketMap = new ConcurrentHashMap<>();
@@ -23,12 +36,17 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     @Override
     @OnOpen
-    public void onOpen(Session session, @PathParam("userId")Integer userId) {
+    public void onOpen(Session session, @PathParam("userId")Integer userId,@PathParam("otherUserId") Integer otherUserId) {
         //将userId 以及对应的类 放入
         websocketMap.put(userId,session);
         try
         {
-            sendMessage(session,"连接成功");
+            List<Chat> chatList=chatMapper.queryChatMessage(otherUserId,userId);
+            if(chatList==null)
+                return;
+            for(Chat chat:chatList)
+                sendMessage(session,chat.getContent());
+            chatMapper.deleteChat(otherUserId,userId);
         }
         catch (Exception e)
         {
@@ -48,20 +66,23 @@ public class WebSocketServiceImpl implements WebSocketService {
     @OnMessage
     public void onMessage(String message, Session session,@PathParam("userId")Integer userId,@PathParam("otherUserId") Integer otherUserId) {
         try {
+            JSONObject jsonObject=new JSONObject(message);
+            String msg=jsonObject.getString("msg");
             //当对方在线时才会发送
             if(websocketMap.containsKey(otherUserId))
-                sendMessage(websocketMap.get(otherUserId),message);
+                sendMessage(websocketMap.get(otherUserId),msg);
+            else
+                chatMapper.insertNewChat(new Chat(userId,otherUserId,new Date(),msg));
         }
-        catch (IOException e)
+        catch (IOException | JSONException e)
         {
-
         }
     }
 
     @Override
     @OnError
     public void onError(Session session, Throwable error) {
-
+        System.out.println(error);
     }
 
     public void sendMessage(Session session,String message) throws IOException {

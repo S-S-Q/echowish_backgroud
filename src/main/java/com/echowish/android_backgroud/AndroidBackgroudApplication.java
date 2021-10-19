@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-
 @MapperScan("com.echowish.android_backgroud.dao")
 public class AndroidBackgroudApplication {
 
