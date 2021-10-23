@@ -66,15 +66,16 @@ public class WebSocketServiceImpl implements WebSocketService {
     @OnMessage
     public void onMessage(String message, Session session,@PathParam("userId")Integer userId,@PathParam("otherUserId") Integer otherUserId) {
         try {
-            JSONObject jsonObject=new JSONObject(message);
-            String msg=jsonObject.getString("msg");
+            System.out.println(message);
+//            JSONObject jsonObject=new JSONObject(message);
+//            String msg=jsonObject.getString("msg");
             //当对方在线时才会发送
             if(websocketMap.containsKey(otherUserId))
-                sendMessage(websocketMap.get(otherUserId),msg);
+                sendMessage(websocketMap.get(otherUserId),message);
             else
-                chatMapper.insertNewChat(new Chat(userId,otherUserId,new Date(),msg));
+                chatMapper.insertNewChat(new Chat(userId,otherUserId,new Date(),message));
         }
-        catch (IOException | JSONException e)
+        catch (IOException e)
         {
         }
     }
