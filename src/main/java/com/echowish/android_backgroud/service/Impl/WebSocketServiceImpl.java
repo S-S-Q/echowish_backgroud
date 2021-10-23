@@ -2,6 +2,7 @@ package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.dao.ChatMapper;
 import com.echowish.android_backgroud.pojo.Chat;
+import com.echowish.android_backgroud.service.ConcernService;
 import com.echowish.android_backgroud.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -24,9 +25,16 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     static ChatMapper chatMapper;
 
+    static ConcernService concernService;
+
     @Autowired
     public void setChatService(ChatMapper chatMapper) {
         this.chatMapper = chatMapper;
+    }
+
+    @Autowired
+    public void setConcernService(ConcernService concernService){
+        this.concernService=concernService;
     }
 
     //记录userId对应的websocketImpl
@@ -69,8 +77,13 @@ public class WebSocketServiceImpl implements WebSocketService {
             System.out.println(message);
 //            JSONObject jsonObject=new JSONObject(message);
 //            String msg=jsonObject.getString("msg");
+            //和对方是好友时 才能发送过去
+            if(!concernService.queryIsConcern(otherUserId,userId))
+            {
+                sendMessage(websocketMap.get(userId),"你们还不是好友");
+            }
             //当对方在线时才会发送
-            if(websocketMap.containsKey(otherUserId))
+            else if(websocketMap.containsKey(otherUserId))
                 sendMessage(websocketMap.get(otherUserId),message);
             else
                 chatMapper.insertNewChat(new Chat(userId,otherUserId,new Date(),message));

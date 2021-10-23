@@ -37,8 +37,17 @@ public class PreConcernServiceImpl implements PreConcernService {
         try
         {
             preConcernMapper.cancelPreConcern(hostId,friId);
+
+            try {
+                preConcernMapper.cancelPreConcern(friId,hostId);
+            }
+            catch (Exception e)
+            {
+
+            }
             //这里可以在chat数据库里面发个信息
             concernService.concernNewFriend(hostId,friId);
+            concernService.concernNewFriend(friId,hostId);
             return ReactInfo.SUCCESS_INFO;
         }
         catch (Exception e)
