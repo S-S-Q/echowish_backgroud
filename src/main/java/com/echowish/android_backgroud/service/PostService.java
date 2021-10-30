@@ -1,12 +1,9 @@
 package com.echowish.android_backgroud.service;
 
-import com.echowish.android_backgroud.pojo.DetailPost;
-import com.echowish.android_backgroud.pojo.MyPublishPost;
-import com.echowish.android_backgroud.pojo.PartPost;
-import com.echowish.android_backgroud.pojo.Post;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import com.echowish.android_backgroud.pojo.post.DetailPost;
+import com.echowish.android_backgroud.pojo.post.MyPublishPost;
+import com.echowish.android_backgroud.pojo.post.PartPost;
+import com.echowish.android_backgroud.pojo.post.Post;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -23,7 +20,12 @@ public interface PostService {
     //删除图片
     void deleteImage(String filename);
 
+    //
+    String deletePostByUserId(int userId);
+
     Post queryPost(Integer postId);
+
+    List<Post> queryAllPost();
 
     String queryPostTitleByPostId(Integer postId);
 

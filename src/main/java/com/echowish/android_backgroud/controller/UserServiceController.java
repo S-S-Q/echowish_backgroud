@@ -1,14 +1,14 @@
 package com.echowish.android_backgroud.controller;
 
-import com.echowish.android_backgroud.pojo.Friend;
-import com.echowish.android_backgroud.pojo.User;
+import com.echowish.android_backgroud.pojo.user.Friend;
+import com.echowish.android_backgroud.pojo.user.User;
 import com.echowish.android_backgroud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("user")
@@ -27,6 +27,13 @@ public class UserServiceController {
         user.setPassword(password);
         System.out.println(account+password);
         return userService.registerNewUsers(user);
+    }
+
+    @GetMapping("delete")
+    @ResponseBody
+    String deleteUserByAccount(@RequestParam("account")String account)
+    {
+        return deleteUserByAccount(account);
     }
 
     @GetMapping("login")
@@ -75,5 +82,12 @@ public class UserServiceController {
                             @RequestParam("friId")Integer friId)
     {
         return userService.getFriendMessage(userId,friId);
+    }
+
+    @GetMapping("getAllUser")
+    @ResponseBody
+    List<User> queryAllUser()
+    {
+        return userService.queryAllUser();
     }
 }

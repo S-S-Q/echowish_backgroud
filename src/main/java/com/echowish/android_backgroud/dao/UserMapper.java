@@ -1,13 +1,19 @@
 package com.echowish.android_backgroud.dao;
 
-import com.echowish.android_backgroud.pojo.Friend;
-import com.echowish.android_backgroud.pojo.User;
+import com.echowish.android_backgroud.pojo.user.Friend;
+import com.echowish.android_backgroud.pojo.user.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserMapper {
     void insertUser(User user);
+
+    void deleteUserByAccount(String account);
+
+    List<User> queryAllUser();
 
     User queryUserByAccount(String account);
 

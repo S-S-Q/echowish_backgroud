@@ -1,4 +1,4 @@
-package com.echowish.android_backgroud.pojo;
+package com.echowish.android_backgroud.pojo.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -10,10 +10,11 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Chat {
-    public Integer myId;
-    public Integer otherId;
+public class MyPublishPost {
+    public Integer postId;
+    public String zone;
+    public String title;
+    public String content;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     public Date time;
-    public String content;
 }

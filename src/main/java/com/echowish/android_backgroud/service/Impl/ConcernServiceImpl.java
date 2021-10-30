@@ -2,8 +2,8 @@ package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.ConcernMapper;
-import com.echowish.android_backgroud.pojo.Concern;
-import com.echowish.android_backgroud.pojo.MyConcern;
+import com.echowish.android_backgroud.pojo.concern.Concern;
+import com.echowish.android_backgroud.pojo.concern.MyConcern;
 import com.echowish.android_backgroud.service.ConcernService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +33,18 @@ public class ConcernServiceImpl implements ConcernService {
     public String cancelFriend(Integer hostId, Integer friId) {
         try{
             concernMapper.cancelConcern(hostId,friId);
+            return ReactInfo.SUCCESS_INFO;
+        }
+        catch (Exception e)
+        {
+            return ReactInfo.FAIL_INFO;
+        }
+    }
+
+    @Override
+    public String deleteFriendByUserId(Integer userId) {
+        try{
+            concernMapper.deleteConcernByHostIdOrFriId(userId);
             return ReactInfo.SUCCESS_INFO;
         }
         catch (Exception e)

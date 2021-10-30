@@ -3,13 +3,14 @@ package com.echowish.android_backgroud.service.Impl;
 import com.echowish.android_backgroud.bean.ServerPathPropBean;
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.PostMapper;
-import com.echowish.android_backgroud.pojo.DetailPost;
-import com.echowish.android_backgroud.pojo.MyPublishPost;
-import com.echowish.android_backgroud.pojo.PartPost;
-import com.echowish.android_backgroud.pojo.Post;
+import com.echowish.android_backgroud.pojo.post.DetailPost;
+import com.echowish.android_backgroud.pojo.post.MyPublishPost;
+import com.echowish.android_backgroud.pojo.post.PartPost;
+import com.echowish.android_backgroud.pojo.post.Post;
 import com.echowish.android_backgroud.service.CommentService;
 import com.echowish.android_backgroud.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -112,6 +113,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public String deletePostByUserId(int userId) {
+        try
+        {
+            postMapper.deleteByUserId(userId);
+            return ReactInfo.SUCCESS_INFO;
+        }
+        catch (Exception e)
+        {
+            return ReactInfo.FAIL_INFO;
+        }
+    }
+
+    @Override
+    @Cacheable(cacheNames = "post",key = "#postId")
     public Post queryPost(Integer postId) {
         Post post=null;
         try
@@ -119,13 +134,24 @@ public class PostServiceImpl implements PostService {
             if(postId==null)
                 return null;
             post=postMapper.queryPost(postId);
-            //如果开头就大于 list的大小 那么就返回空
-            //如果尾部大于长度 则 返回 最大长度
+            System.out.println("调用了");
             return post;
         }
         catch (Exception e)
         {
             return post;
+        }
+    }
+
+    @Override
+    public List<Post> queryAllPost() {
+        try
+        {
+            return postMapper.queryAllPost();
+        }
+        catch (Exception e)
+        {
+            return null;
         }
     }
 
@@ -158,6 +184,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Cacheable(cacheNames = "detailPost",key = "#postId")
     public DetailPost queryDetailPost(Integer postId) {
         DetailPost detailPost=null;
         try
@@ -174,6 +201,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+
     public List<PartPost> queryPartPost(int start, int end) {
         System.out.println(start);
         try

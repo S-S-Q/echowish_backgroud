@@ -1,6 +1,6 @@
 package com.echowish.android_backgroud.dao;
 
-import com.echowish.android_backgroud.pojo.Chat;
+import com.echowish.android_backgroud.pojo.chat.Chat;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

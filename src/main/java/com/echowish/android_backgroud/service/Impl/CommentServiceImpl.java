@@ -2,7 +2,10 @@ package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.CommentMapper;
-import com.echowish.android_backgroud.pojo.*;
+import com.echowish.android_backgroud.pojo.comment.Comment;
+import com.echowish.android_backgroud.pojo.comment.CommentAndUserInfo;
+import com.echowish.android_backgroud.pojo.comment.MyComment;
+import com.echowish.android_backgroud.pojo.comment.OthersComment;
 import com.echowish.android_backgroud.service.CommentService;
 import com.echowish.android_backgroud.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,18 @@ public class CommentServiceImpl implements CommentService {
             return ReactInfo.SUCCESS_INFO;
 
         }catch (Exception e)
+        {
+            return ReactInfo.FAIL_INFO;
+        }
+    }
+
+    @Override
+    public String deleteCommentByUserId(Integer userId) {
+        try {
+            commentMapper.deleteByUserId(userId);
+            return ReactInfo.SUCCESS_INFO;
+        }
+        catch (Exception e)
         {
             return ReactInfo.FAIL_INFO;
         }

@@ -1,8 +1,7 @@
 package com.echowish.android_backgroud.dao;
 
-import com.echowish.android_backgroud.pojo.Concern;
-import com.echowish.android_backgroud.pojo.Friend;
-import com.echowish.android_backgroud.pojo.MyConcern;
+import com.echowish.android_backgroud.pojo.concern.Concern;
+import com.echowish.android_backgroud.pojo.concern.MyConcern;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +11,8 @@ import java.util.List;
 public interface ConcernMapper {
     void insertConcern(@Param(value = "hostId") Integer hostId,
                        @Param(value = "friId") Integer friId);
+
+    void deleteConcernByHostIdOrFriId(Integer userId);
 
     void cancelConcern(@Param(value = "hostId")Integer hostId,
                        @Param(value = "friId")Integer friId);

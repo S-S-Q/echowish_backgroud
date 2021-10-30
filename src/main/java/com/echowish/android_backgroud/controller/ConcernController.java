@@ -1,8 +1,7 @@
 package com.echowish.android_backgroud.controller;
 
-import com.echowish.android_backgroud.pojo.MyConcern;
+import com.echowish.android_backgroud.pojo.concern.MyConcern;
 import com.echowish.android_backgroud.service.ConcernService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

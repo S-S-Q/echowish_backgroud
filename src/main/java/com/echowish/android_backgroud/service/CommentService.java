@@ -1,18 +1,19 @@
 package com.echowish.android_backgroud.service;
 
-import com.echowish.android_backgroud.pojo.Comment;
-import com.echowish.android_backgroud.pojo.CommentAndUserInfo;
-import com.echowish.android_backgroud.pojo.MyComment;
-import com.echowish.android_backgroud.pojo.OthersComment;
+import com.echowish.android_backgroud.pojo.comment.Comment;
+import com.echowish.android_backgroud.pojo.comment.CommentAndUserInfo;
+import com.echowish.android_backgroud.pojo.comment.MyComment;
+import com.echowish.android_backgroud.pojo.comment.OthersComment;
 
 import java.util.List;
-import java.util.Map;
 
 public interface CommentService {
 
     public String publishNewComment(Comment comment);
 
     public String deleteMyComment(Comment comment);
+
+    public String deleteCommentByUserId(Integer userId);
 
     String deleteAllCommentByPostId(Integer postId);
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echowish.android_backgroud.dao.AdminMapper">
+    <resultMap id="adminResultMapper" type="com.echowish.android_backgroud.pojo.admin.Admin">
+        <id property="adminId" column="admin_id"></id>
+        <result property="account" column="account"></result>
+        <result property="password" column="password"></result>
+        <result property="name" column="name"></result>
+    </resultMap>
+
+
+    <insert id="insertNewAdmin" parameterType="com.echowish.android_backgroud.pojo.admin.Admin" >
+        insert into admin(admin_id,account,password,name) values (#{adminId},#{account},#{password},#{name});;
+    </insert>
+
+    <delete id="deleteAdminById" parameterType="java.lang.Integer">
+        delete from admin where admin_id=#{id};
+    </delete>
+
+    <select id="queryAdminByAccount" parameterType="java.lang.String" resultMap="adminResultMapper">
+        select * from admin where account=#{account};
+    </select>
+
+    <select id="queryAdminNameByAccountAndPassword" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select admin_id from admin where account=#{account} and password=#{password};
+    </select>
+
+</mapper>

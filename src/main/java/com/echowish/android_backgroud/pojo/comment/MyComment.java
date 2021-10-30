@@ -1,5 +1,6 @@
-package com.echowish.android_backgroud.pojo;
+package com.echowish.android_backgroud.pojo.comment;
 
+import com.echowish.android_backgroud.pojo.comment.Comment;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ public class MyComment {
     public Date time;
     public String postTitle;
 
-    public MyComment(Comment comment,String postTitle)
+    public MyComment(Comment comment, String postTitle)
     {
         this.postId=comment.getPostId();
         this.userId=comment.getUserId();

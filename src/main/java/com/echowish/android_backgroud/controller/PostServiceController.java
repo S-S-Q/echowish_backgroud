@@ -1,14 +1,12 @@
 package com.echowish.android_backgroud.controller;
 
-import com.echowish.android_backgroud.pojo.DetailPost;
-import com.echowish.android_backgroud.pojo.MyPublishPost;
-import com.echowish.android_backgroud.pojo.PartPost;
-import com.echowish.android_backgroud.pojo.Post;
+import com.echowish.android_backgroud.pojo.post.DetailPost;
+import com.echowish.android_backgroud.pojo.post.MyPublishPost;
+import com.echowish.android_backgroud.pojo.post.PartPost;
+import com.echowish.android_backgroud.pojo.post.Post;
 import com.echowish.android_backgroud.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,6 +49,13 @@ public class PostServiceController {
     public Post queryPost(@RequestParam(value = "postId")Integer postId)
     {
         return postService.queryPost(postId);
+    }
+
+    @GetMapping("queryAllPost")
+    @ResponseBody
+    public List<Post> queryAllPost()
+    {
+        return postService.queryAllPost();
     }
 
     @GetMapping("queryDetailPost")

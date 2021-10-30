@@ -1,18 +1,21 @@
 package com.echowish.android_backgroud;
 
 import com.echowish.android_backgroud.dao.*;
-import com.echowish.android_backgroud.pojo.Chat;
-import com.echowish.android_backgroud.pojo.Comment;
-import com.echowish.android_backgroud.pojo.Post;
 import com.echowish.android_backgroud.service.CommentService;
 import com.echowish.android_backgroud.service.PostService;
 import com.echowish.android_backgroud.service.UserService;
+import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 @SpringBootTest
 class AndroidBackgroudApplicationTests {
@@ -33,18 +36,6 @@ class AndroidBackgroudApplicationTests {
     ConcernMapper concernMapper;
     @Autowired
     ChatMapper chatMapper;
-
-
-    @Test
-    void contextLoads() {
-        System.out.print(userMapper.queryUserByAccount(String.valueOf(1)));
-    }
-
-    @Test
-    void update()
-    {
-        postService.deleteImage("2021-09-06-01-09-15-1.jpg");
-    }
 
     @Test
     void get()

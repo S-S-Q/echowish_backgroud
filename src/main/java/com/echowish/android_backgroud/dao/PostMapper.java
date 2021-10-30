@@ -1,9 +1,9 @@
 package com.echowish.android_backgroud.dao;
 
-import com.echowish.android_backgroud.pojo.DetailPost;
-import com.echowish.android_backgroud.pojo.MyPublishPost;
-import com.echowish.android_backgroud.pojo.PartPost;
-import com.echowish.android_backgroud.pojo.Post;
+import com.echowish.android_backgroud.pojo.post.DetailPost;
+import com.echowish.android_backgroud.pojo.post.MyPublishPost;
+import com.echowish.android_backgroud.pojo.post.PartPost;
+import com.echowish.android_backgroud.pojo.post.Post;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +13,12 @@ import java.util.List;
 public interface PostMapper {
     //向数据库中插入新的帖子
     public void insertPost(Post post);
+
+    //查找所有帖子 详细信息
+    public List<Post> queryAllPost();
+
+    //通过用户id删除帖子
+    public void deleteByUserId(Integer userId);
 
    //通过帖子id查找图片路径
     public String queryImageByPostId(Integer postId);

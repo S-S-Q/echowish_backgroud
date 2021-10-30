@@ -4,12 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.echowish.android_backgroud.dao.ConcernMapper">
 
-    <resultMap id="concernResultMapper" type="com.echowish.android_backgroud.pojo.Concern">
+    <resultMap id="concernResultMapper" type="com.echowish.android_backgroud.pojo.concern.Concern">
         <result property="hostId" column="host_id"></result>
         <result property="friId" column="fri_id"></result>
     </resultMap>
 
-    <resultMap id="myConcernResultMapper" type="com.echowish.android_backgroud.pojo.MyConcern">
+    <resultMap id="myConcernResultMapper" type="com.echowish.android_backgroud.pojo.concern.MyConcern">
         <result property="hostId" column="host_id"></result>
         <result property="friId" column="fri_id"></result>
         <result property="name" column="name"></result>
@@ -22,6 +22,10 @@
 
     <delete id="cancelConcern">
         delete from concern where host_id=#{hostId} and fri_id=#{friId};
+    </delete>
+
+    <delete id="deleteConcernByHostIdOrFriId" parameterType="java.lang.Integer">
+        delete from concern where host_id=#{userId} or fri_id=#{userId};
     </delete>
 
     <select id="queryIsConcern" resultMap="concernResultMapper">

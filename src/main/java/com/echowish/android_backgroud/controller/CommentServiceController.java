@@ -1,12 +1,11 @@
 package com.echowish.android_backgroud.controller;
 
 
-import com.echowish.android_backgroud.pojo.Comment;
-import com.echowish.android_backgroud.pojo.CommentAndUserInfo;
-import com.echowish.android_backgroud.pojo.MyComment;
-import com.echowish.android_backgroud.pojo.OthersComment;
+import com.echowish.android_backgroud.pojo.comment.Comment;
+import com.echowish.android_backgroud.pojo.comment.CommentAndUserInfo;
+import com.echowish.android_backgroud.pojo.comment.MyComment;
+import com.echowish.android_backgroud.pojo.comment.OthersComment;
 import com.echowish.android_backgroud.service.CommentService;
-import org.mybatis.spring.annotation.MapperScans;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;

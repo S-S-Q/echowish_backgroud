@@ -2,13 +2,12 @@ package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.PreConcernMapper;
-import com.echowish.android_backgroud.pojo.MyPreConcernRequest;
+import com.echowish.android_backgroud.pojo.preconcern.MyPreConcernRequest;
 import com.echowish.android_backgroud.service.ConcernService;
 import com.echowish.android_backgroud.service.PreConcernService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -61,6 +60,19 @@ public class PreConcernServiceImpl implements PreConcernService {
         try
         {
             preConcernMapper.cancelPreConcern(hostId,friId);
+            return ReactInfo.SUCCESS_INFO;
+        }
+        catch (Exception e)
+        {
+            return ReactInfo.FAIL_INFO;
+        }
+    }
+
+    @Override
+    public String deleteConcernRequestByUserId(int userId) {
+        try
+        {
+            preConcernMapper.deleteByFriIdOrHostId(userId);
             return ReactInfo.SUCCESS_INFO;
         }
         catch (Exception e)

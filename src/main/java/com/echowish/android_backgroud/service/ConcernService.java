@@ -1,6 +1,6 @@
 package com.echowish.android_backgroud.service;
 
-import com.echowish.android_backgroud.pojo.MyConcern;
+import com.echowish.android_backgroud.pojo.concern.MyConcern;
 
 import java.util.List;
 
@@ -11,6 +11,9 @@ public interface ConcernService {
 
     //取消关注好友
     String cancelFriend(Integer hostId,Integer friId);
+
+    //
+    String deleteFriendByUserId(Integer userId);
 
     //获得我的关注
     List<MyConcern> getAllMyConcern(Integer hostId);

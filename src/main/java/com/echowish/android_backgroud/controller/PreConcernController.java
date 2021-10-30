@@ -1,6 +1,6 @@
 package com.echowish.android_backgroud.controller;
 
-import com.echowish.android_backgroud.pojo.MyPreConcernRequest;
+import com.echowish.android_backgroud.pojo.preconcern.MyPreConcernRequest;
 import com.echowish.android_backgroud.service.PreConcernService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

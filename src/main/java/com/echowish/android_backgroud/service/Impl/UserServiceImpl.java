@@ -3,10 +3,9 @@ package com.echowish.android_backgroud.service.Impl;
 import com.echowish.android_backgroud.bean.ServerPathPropBean;
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.UserMapper;
-import com.echowish.android_backgroud.pojo.Friend;
-import com.echowish.android_backgroud.pojo.User;
-import com.echowish.android_backgroud.service.ConcernService;
-import com.echowish.android_backgroud.service.UserService;
+import com.echowish.android_backgroud.pojo.user.Friend;
+import com.echowish.android_backgroud.pojo.user.User;
+import com.echowish.android_backgroud.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -27,11 +27,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     ConcernService concernService;
     @Autowired
+    PreConcernService preConcernService;
+    @Autowired
+    PostService postService;
+    @Autowired
+    CommentService commentService;
+    @Autowired
     ServerPathPropBean serverPathPropBean;
+
 
     @Override
     public String registerNewUsers(User user) {
-        //出现重复账户 注册失败
+        //出现重复账户 注册失败[这里会在高并发时 出现错误]
         if(userMapper.queryAccountNumsByAccount(user.getAccount())!=0)
             return ReactInfo.REGISTER_FAIL;
         //尝试注册
@@ -43,6 +50,42 @@ public class UserServiceImpl implements UserService {
         {
             System.out.println(e);
             return ReactInfo.FAIL_INFO;
+        }
+    }
+
+    @Override
+    public String deleteUser(String account) {
+        try {
+            User user=userMapper.queryUserByAccount(account);
+            userMapper.deleteUserByAccount(account);
+            String ans1=postService.deletePostByUserId(user.getUserId());
+
+            String ans2=concernService.deleteFriendByUserId(user.getUserId());
+            String ans3=preConcernService.deleteConcernRequestByUserId(user.getUserId());
+            String ans4=commentService.deleteCommentByUserId(user.getUserId());
+            if(ans1==ReactInfo.SUCCESS_INFO
+            &&ans2==ReactInfo.SUCCESS_INFO
+            &&ans3==ReactInfo.SUCCESS_INFO
+            &&ans4==ReactInfo.SUCCESS_INFO)
+            return ReactInfo.SUCCESS_INFO;
+
+            return ReactInfo.FAIL_INFO;
+        }
+        catch (Exception e)
+        {
+            return ReactInfo.FAIL_INFO;
+        }
+    }
+
+    @Override
+    public List<User> queryAllUser() {
+        try
+        {
+            return userMapper.queryAllUser();
+        }
+        catch (Exception e)
+        {
+            return null;
         }
     }
 

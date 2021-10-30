@@ -1,12 +1,10 @@
 package com.echowish.android_backgroud.service.Impl;
 
 import com.echowish.android_backgroud.dao.ChatMapper;
-import com.echowish.android_backgroud.pojo.Chat;
+import com.echowish.android_backgroud.pojo.chat.Chat;
 import com.echowish.android_backgroud.service.ConcernService;
 import com.echowish.android_backgroud.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;

@@ -1,5 +1,6 @@
-package com.echowish.android_backgroud.pojo;
+package com.echowish.android_backgroud.pojo.comment;
 
+import com.echowish.android_backgroud.pojo.comment.Comment;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class CommentAndUserInfo {
     public String name;
     public String headImage;
 
-    public CommentAndUserInfo(Comment comment,String username,String headImage)
+    public CommentAndUserInfo(Comment comment, String username, String headImage)
     {
         this.postId=comment.getPostId();
         this.userId=comment.getUserId();

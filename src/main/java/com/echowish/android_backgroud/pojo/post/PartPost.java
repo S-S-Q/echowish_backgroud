@@ -1,4 +1,4 @@
-package com.echowish.android_backgroud.pojo;
+package com.echowish.android_backgroud.pojo.post;
 
 
 import lombok.AllArgsConstructor;

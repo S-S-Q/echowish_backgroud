@@ -3,12 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.echowish.android_backgroud.dao.PreConcernMapper">
-    <resultMap id="preConcernResultMapper" type="com.echowish.android_backgroud.pojo.PreConcern">
+    <resultMap id="preConcernResultMapper" type="com.echowish.android_backgroud.pojo.preconcern.PreConcern">
         <result property="hostId" column="host_id"></result>
         <result property="friId" column="fri_id"></result>
     </resultMap>
 
-    <resultMap id="myPreConcernResultMapper" type="com.echowish.android_backgroud.pojo.MyPreConcernRequest">
+    <resultMap id="myPreConcernResultMapper" type="com.echowish.android_backgroud.pojo.preconcern.MyPreConcernRequest">
         <result property="hostId" column="host_id"></result>
         <result property="friId" column="fri_id"></result>
         <result property="name" column="name"></result>
@@ -22,6 +22,10 @@
 
     <delete id="cancelPreConcern">
         delete from preconcern where host_id=#{hostId} and fri_id=#{friId};
+    </delete>
+
+    <delete id="deleteByFriIdOrHostId" parameterType="java.lang.Integer">
+        delete  from  preconcern where host_id=#{userId} or fri_id=#{userId};
     </delete>
 
     <select id="queryIsPreConcern" resultMap="preConcernResultMapper">

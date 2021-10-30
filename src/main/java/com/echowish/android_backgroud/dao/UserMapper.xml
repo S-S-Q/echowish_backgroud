@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.echowish.android_backgroud.dao.UserMapper">
-    <resultMap id="userResultMapper" type="com.echowish.android_backgroud.pojo.User">
+    <resultMap id="userResultMapper" type="com.echowish.android_backgroud.pojo.user.User">
         <id property="userId" column="user_id"></id>
         <result property="account" column="account"></result>
         <result property="password" column="password"></result>
@@ -15,7 +15,7 @@
         <result property="headImage" column="head_image"></result>
     </resultMap>
 
-    <resultMap id="friendsResultMapper" type="com.echowish.android_backgroud.pojo.Friend">
+    <resultMap id="friendsResultMapper" type="com.echowish.android_backgroud.pojo.user.Friend">
         <id property="userId" column="user_id"></id>
         <result property="name" column="name"></result>
         <result property="sex" column="sex"></result>
@@ -24,10 +24,14 @@
         <result property="headImage" column="head_image"></result>
     </resultMap>
 
-    <insert id="insertUser" parameterType="com.echowish.android_backgroud.pojo.User">
+    <insert id="insertUser" parameterType="com.echowish.android_backgroud.pojo.user.User">
         insert into user(user_id,account,password)
         values (#{userId},#{account},#{password});
     </insert>
+
+    <delete id="deleteUserByAccount" parameterType="java.lang.String">
+        delete from user where account=#{account};
+    </delete>
 
     <select id="queryUserByAccount" parameterType="java.lang.String" resultMap="userResultMapper">
          select * from `user` where account=#{account};
@@ -49,11 +53,16 @@
         update `user` set head_image=#{filename} where user_id=#{userId};
     </update>
 
-    <update id="updateUserInfo" parameterType="com.echowish.android_backgroud.pojo.User">
+    <update id="updateUserInfo" parameterType="com.echowish.android_backgroud.pojo.user.User">
         update `user` set name=#{name},sex=#{sex},grade=#{grade},campus=#{campus} where user_id=#{userId};
     </update>
 
     <select id="queryFriendByUserId" parameterType="java.lang.Integer" resultMap="friendsResultMapper">
         select * from `user` where user_id=#{userId};
     </select>
+
+    <select id="queryAllUser" resultMap="userResultMapper">
+        select * from `user`;
+    </select>
+
 </mapper>
