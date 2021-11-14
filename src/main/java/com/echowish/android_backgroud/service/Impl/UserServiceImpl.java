@@ -57,12 +57,13 @@ public class UserServiceImpl implements UserService {
     public String deleteUser(String account) {
         try {
             User user=userMapper.queryUserByAccount(account);
-            userMapper.deleteUserByAccount(account);
             String ans1=postService.deletePostByUserId(user.getUserId());
 
             String ans2=concernService.deleteFriendByUserId(user.getUserId());
             String ans3=preConcernService.deleteConcernRequestByUserId(user.getUserId());
             String ans4=commentService.deleteCommentByUserId(user.getUserId());
+            userMapper.deleteUserByAccount(account);
+
             if(ans1==ReactInfo.SUCCESS_INFO
             &&ans2==ReactInfo.SUCCESS_INFO
             &&ans3==ReactInfo.SUCCESS_INFO
@@ -182,7 +183,7 @@ public class UserServiceImpl implements UserService {
         Friend friend=null;
         try
         {
-            friend=userMapper.queryFriendByUserId(userId);
+            friend=userMapper.queryFriendByUserId(friId);
             friend.isConcern=concernService.queryIsConcern(userId,friId);
             return friend;
         }

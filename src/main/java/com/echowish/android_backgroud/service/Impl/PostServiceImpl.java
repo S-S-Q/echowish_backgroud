@@ -40,21 +40,22 @@ public class PostServiceImpl implements PostService {
             if(post.postImage==null)
                 post.postImage="";
 
-
             if(loadImage(file,post.postImage))
             {
+                System.out.println(true);
                 postMapper.insertPost(post);
-
                 return ReactInfo.SUCCESS_INFO;
             }
             else
             {
+                System.out.println(false);
                 deleteImage(post.postImage);
                 return ReactInfo.FAIL_INFO;
             }
 
         }
         catch (Exception e) {
+            System.out.println(false+"还有错误");
             System.out.println(e);
            return ReactInfo.FAIL_INFO;
         }
@@ -90,7 +91,7 @@ public class PostServiceImpl implements PostService {
         }
         catch (Exception e)
         {
-            System.out.println(ReactInfo.FAIL_INFO);
+            System.out.println(e);
             return false;
         }
     }
@@ -126,7 +127,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Cacheable(cacheNames = "post",key = "#postId")
+//    @Cacheable(cacheNames = "post",key = "#postId")
     public Post queryPost(Integer postId) {
         Post post=null;
         try
@@ -184,7 +185,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Cacheable(cacheNames = "detailPost",key = "#postId")
+//    @Cacheable(cacheNames = "detailPost",key = "#postId")
     public DetailPost queryDetailPost(Integer postId) {
         DetailPost detailPost=null;
         try

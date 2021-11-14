@@ -15,6 +15,6 @@ public class MyPublishPost {
     public String zone;
     public String title;
     public String content;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     public Date time;
 }

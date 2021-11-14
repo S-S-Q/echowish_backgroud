@@ -22,7 +22,7 @@ public class Post {
   public String reward;
 
   public String postImage;
-  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
   public Date time;
 
   public Post(Integer userId,String title,String zone,String content,String reward,String imageUri,Date time)

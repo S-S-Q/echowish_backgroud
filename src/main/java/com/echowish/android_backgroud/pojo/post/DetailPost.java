@@ -18,7 +18,7 @@ public class DetailPost {
     public String content;
     public String reward;
     public String postImage;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     public Date time;
     public String name;
     public String headImage;

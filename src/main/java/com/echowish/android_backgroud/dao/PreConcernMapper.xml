@@ -33,7 +33,7 @@
     </select>
 
     <select id="queryAllMyPreConcern" resultMap="myPreConcernResultMapper">
-        select host_id,fri_id,`name`,head_image from   preconcern left join `user` on preconcern.fri_id=`user`.user_id where fri_Id=#{hostId};
+        SELECT host_id,fri_id,`name`,head_image FROM   preconcern LEFT JOIN `user` ON preconcern.host_id=`user`.user_id WHERE fri_Id=#{hostId};
     </select>
 
 </mapper>

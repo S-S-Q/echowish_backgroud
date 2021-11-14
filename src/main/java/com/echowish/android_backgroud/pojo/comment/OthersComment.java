@@ -16,7 +16,7 @@ public class OthersComment {
     public Integer postId;
     public Integer userId;
     public String content;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     public Date time;
     public User user;
 }

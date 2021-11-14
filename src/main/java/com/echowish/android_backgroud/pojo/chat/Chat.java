@@ -13,7 +13,7 @@ import java.util.Date;
 public class Chat {
     public Integer myId;
     public Integer otherId;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     public Date time;
     public String content;
 }
