@@ -1,9 +1,6 @@
 package com.echowish.android_backgroud.controller;
 
-import com.echowish.android_backgroud.pojo.post.DetailPost;
-import com.echowish.android_backgroud.pojo.post.MyPublishPost;
-import com.echowish.android_backgroud.pojo.post.PartPost;
-import com.echowish.android_backgroud.pojo.post.Post;
+import com.echowish.android_backgroud.pojo.post.*;
 import com.echowish.android_backgroud.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,7 +28,7 @@ public class PostServiceController {
             @RequestParam(value = "zone",required = true)String zone,
             @RequestParam(value = "content",required = true)String content,
             @RequestParam(value = "reward",required = false)String reward,
-            @RequestParam(value = "time",required = true) @DateTimeFormat(pattern="yyyy-MM-dd") Date time)
+            @RequestParam(value = "time",required = true) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date time)
       {
           return postService.publishPost(file,new Post(user_id,title,zone,content,reward,filename,time));
       }
@@ -101,5 +98,12 @@ public class PostServiceController {
     public List<MyPublishPost> queryMyPublishPostByUserId(@RequestParam(value = "userId")Integer userId)
     {
         return postService.queryMyPublishPostByUserId(userId);
+    }
+
+    @GetMapping("getHotSearch")
+    @ResponseBody
+    public List<HotSearch> getHotSearch(@RequestParam(value = "num")Integer num)
+    {
+        return postService.getHotSearch(num);
     }
 }

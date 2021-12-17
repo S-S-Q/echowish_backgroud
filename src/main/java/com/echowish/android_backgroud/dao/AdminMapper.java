@@ -3,6 +3,8 @@ package com.echowish.android_backgroud.dao;
 import com.echowish.android_backgroud.pojo.admin.Admin;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 @Mapper
 public interface AdminMapper {

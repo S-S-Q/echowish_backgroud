@@ -24,6 +24,8 @@ public class Post {
   public String postImage;
   @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
   public Date time;
+  public Integer visits;
+  public Integer collections;
 
   public Post(Integer userId,String title,String zone,String content,String reward,String imageUri,Date time)
   {

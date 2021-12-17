@@ -13,6 +13,8 @@
         <result property="reward" column="reward"></result>
         <result property="postImage" column="post_image"></result>
         <result property="time" column="time"></result>
+        <result property="visits" column="visits"></result>
+        <result property="collections" column="collections"></result>
     </resultMap>
 
     <resultMap id="detailPostResultMapper" type="com.echowish.android_backgroud.pojo.post.DetailPost">
@@ -26,6 +28,8 @@
         <result property="time" column="time"></result>
         <result property="name" column="name"></result>
         <result property="headImage" column="head_image"></result>
+        <result property="visits" column="visits"></result>
+        <result property="collections" column="collections"></result>
     </resultMap>
 
     <resultMap id="partPostResultMapper" type="com.echowish.android_backgroud.pojo.post.PartPost">
@@ -43,12 +47,19 @@
         <result property="time" column="time"></result>
     </resultMap>
 
+    <resultMap id="hotSearchResultMapper" type="com.echowish.android_backgroud.pojo.post.HotSearch">
+        <result property="postId" column="post_id"></result>
+        <result property="rank" column="my_rank"></result>
+        <result property="title" column="title"></result>
+    </resultMap>
+
 
 
     <insert id="insertPost" parameterType="com.echowish.android_backgroud.pojo.post.Post">
         insert into post(post_id,user_id,title,zone,content,reward,post_image,`time`)
         values(#{postId},#{userId},#{title},#{zone},#{content},#{reward},#{postImage},#{time})
     </insert>
+
 
     <select id="queryImageByPostId" parameterType="java.lang.Integer" resultType="java.lang.String">
         select  post_image from post  where post_id=#{postId}
@@ -105,5 +116,18 @@
     <select id="queryAllPost" resultMap="postResultMapper">
         select * from post;
     </select>
+
+    <update id="updatePostVisits" parameterType="java.lang.Integer">
+        update post set visits=visits+1 where post_id=#{postId};
+    </update>
+
+    <update id="updatePostCollections" parameterType="java.lang.Integer">
+        update post set collections=collections+1 where post_id=#{postId};
+    </update>
+
+    <select id="getHotSearch" resultMap="hotSearchResultMapper" parameterType="java.lang.Integer">
+        SELECT post_id,`title`,rank()over(ORDER BY `time` DESC)AS my_rank FROM post LIMIT 0,#{my_num};
+    </select>
+
 
 </mapper>

@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.websocket.EncodeException;
+import javax.websocket.Encoder;
+import javax.websocket.EndpointConfig;
 import java.util.Date;
 
 @Data
@@ -16,4 +19,5 @@ public class Chat {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     public Date time;
     public String content;
+
 }

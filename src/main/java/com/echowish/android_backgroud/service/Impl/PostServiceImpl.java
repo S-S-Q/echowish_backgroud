@@ -3,12 +3,11 @@ package com.echowish.android_backgroud.service.Impl;
 import com.echowish.android_backgroud.bean.ServerPathPropBean;
 import com.echowish.android_backgroud.constant.ReactInfo;
 import com.echowish.android_backgroud.dao.PostMapper;
-import com.echowish.android_backgroud.pojo.post.DetailPost;
-import com.echowish.android_backgroud.pojo.post.MyPublishPost;
-import com.echowish.android_backgroud.pojo.post.PartPost;
-import com.echowish.android_backgroud.pojo.post.Post;
+import com.echowish.android_backgroud.pojo.post.*;
+import com.echowish.android_backgroud.service.CollectionService;
 import com.echowish.android_backgroud.service.CommentService;
 import com.echowish.android_backgroud.service.PostService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -24,12 +23,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class PostServiceImpl implements PostService {
 
     @Autowired
     PostMapper postMapper;
     @Autowired
     CommentService commentService;
+    @Autowired
+    CollectionService collectionService;
     @Autowired
     ServerPathPropBean serverPathPropBean;
 
@@ -191,7 +193,9 @@ public class PostServiceImpl implements PostService {
         try
         {
             detailPost=postMapper.queryDetailPost(postId);
-            System.out.println(detailPost);
+            //修改帖子的访问量个数
+            postMapper.updatePostVisits(postId);
+            Boolean isCollection=false;
             return detailPost;
         }
         catch (Exception e)
@@ -279,6 +283,21 @@ public class PostServiceImpl implements PostService {
         }catch (Exception e)
         {
             return ansList;
+        }
+    }
+
+    @Override
+    public List<HotSearch> getHotSearch(Integer Num) {
+        List<HotSearch> hotSearches=null;
+        try
+        {
+            hotSearches=postMapper.getHotSearch(Num);
+            return hotSearches;
+        }
+        catch (Exception e)
+        {
+            log.info(e+"获取热搜出现错误");
+            return hotSearches;
         }
     }
 }

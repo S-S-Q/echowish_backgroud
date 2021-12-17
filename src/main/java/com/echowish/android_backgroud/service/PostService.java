@@ -1,9 +1,6 @@
 package com.echowish.android_backgroud.service;
 
-import com.echowish.android_backgroud.pojo.post.DetailPost;
-import com.echowish.android_backgroud.pojo.post.MyPublishPost;
-import com.echowish.android_backgroud.pojo.post.PartPost;
-import com.echowish.android_backgroud.pojo.post.Post;
+import com.echowish.android_backgroud.pojo.post.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -42,4 +39,6 @@ public interface PostService {
     List<PartPost> queryPartPostByZoneAndKeyWord(String zone,String keyword);
 
     List<MyPublishPost> queryMyPublishPostByUserId(Integer userId);
+
+    List<HotSearch> getHotSearch(Integer Num);
 }

@@ -1,9 +1,6 @@
 package com.echowish.android_backgroud.dao;
 
-import com.echowish.android_backgroud.pojo.post.DetailPost;
-import com.echowish.android_backgroud.pojo.post.MyPublishPost;
-import com.echowish.android_backgroud.pojo.post.PartPost;
-import com.echowish.android_backgroud.pojo.post.Post;
+import com.echowish.android_backgroud.pojo.post.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -59,5 +56,13 @@ public interface PostMapper {
     //通过userId 获取用户发布帖子的postId
     public List<Integer> queryMyPostIdByUserId(Integer userId);
 
+    // 修改帖子访问量
+    public void updatePostVisits(Integer postId);
+
+    //修改帖子的收藏量
+    public void updatePostCollections(Integer postId);
+
+    //获取热搜帖子
+    public List<HotSearch> getHotSearch(Integer my_num);
 
 }

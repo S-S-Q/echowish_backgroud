@@ -8,20 +8,15 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class DetailPost {
+@NoArgsConstructor
+public class MyCollection {
+    public Integer collectionId;
     public Integer postId;
     public Integer userId;
     public String zone;
     public String title;
     public String content;
-    public String reward;
-    public String postImage;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     public Date time;
-    public String name;
-    public String headImage;
-    public Integer visits;
-    public Integer collections;
 }
